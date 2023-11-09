@@ -20,6 +20,12 @@ Module is created as part of the group project for the final exam of DS830 Intro
 def local_metric(c_i: int, N_J: int) -> float:
     """
     Return  the frustration of a site
+
+    TODO:   add tests
+            add assumptions
+
+    Parameters
+    ----------
     """
 
     # Store local metric total
@@ -39,6 +45,12 @@ def global_metric(Graph: list):
     """
     Return the sum of the local_metric over every single vertex of the graph.
     The global metric is the measure of the frustration of the graph simulated by the program.
+
+    TODO:   add tests
+            add assumptions
+
+    Parameters
+    ----------
     """
 
     # Store total frustration
