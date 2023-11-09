@@ -1,5 +1,4 @@
 # test
-
 def Read_text_file_into_list_of_tuples(path_to_text_file):
 	#data = []
 	#with open(path_to_text_file, 'r') as file:
