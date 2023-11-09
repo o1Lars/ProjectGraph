@@ -29,6 +29,8 @@ def local_metric(c_i: int, N_J: int) -> float:
     for j in range(1, N_J + 1):
         total += (1 - 2 * c_i) * (1 - 2 * (1 - j))
     return total
+    # TODO -> Add so this function properly adds the total to list for storing the values through the iteration
+    # Possibly not part of function but added when calling the function
 
 # global metric function
 
@@ -43,10 +45,13 @@ def global_metric(Graph: list):
     total_frustration = 0
 
     # iterate over list/set of site frustations and add them to total frustration
+    # TODO
 
     # Multiply total_frustration by 1/2 as per the provided formula.
     total_frustration *= 0.5
 
+# TODO
 # Store individual frustrations of a site from running the local_metric function
 
+# TODO
 # Store total frustration after each simulation
