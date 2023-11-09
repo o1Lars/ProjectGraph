@@ -62,8 +62,60 @@ def global_metric(Graph: list):
     # Multiply total_frustration by 1/2 as per the provided formula.
     total_frustration *= 0.5
 
+
+def ordered(graph: list) -> list:
+    """
+    Visit each site of the graph and change (swap) the colour if the local action of the site is negative
+
+    Parameters
+    ----------
+    graph : list
+        DESCRIPTION. # TODO
+
+    # add tests
+    """
+    # TOOD
+    print("the colors of the sites have been swapped")
+
+
+def max_violation(graph: list) -> list:
+    """
+    Identify the site with the largest value of local action and swap its colour.
+
+    Parameters
+    ----------
+    graph : list
+        DESCRIPTION. # TODO
+
+    # add tests
+    """
+    # TOOD
+    print("the site with the largest value of the local action has had its colours swapped")
+
+
+def monte_carlo(graph: list) -> list:
+    """
+    Visit each site of the graph and change (swap) the colour if the exponential of the local action is greater 
+    than a random number between 0 and 1
+
+    Parameters
+    ----------
+    graph : list
+        DESCRIPTION. # TODO
+
+    # add tests
+    """
+    # TOOD
+    print("the site with the largest value of the local action has had its colours swapped")
+
 # TODO
 # Store individual frustrations of a site from running the local_metric function
 
 # TODO
 # Store total frustration after each simulation
+
+
+# Import doctest module
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
