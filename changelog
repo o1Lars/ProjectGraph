@@ -1,1 +1,7 @@
-## (DD-MM-YYYY) <-- Ændringer skrives her med følgende notering i begyndelsen
+(DD-MM-YYYY - NAVN) <-- Ændringer skrives her med følgende notering i begyndelsen
+(9-11-2023 - Lars) nye tilføjelser --> Mappen "minimal-furstration-graph" og test-test er blevet tilføjet (af Chris).
+  Vores primære kode foregår inde i "minimal-frustration-graph" mappen.
+  De andre .py filer udenfor disse mapper er bare til inspiration, og kan bruges som man lyster.
+  filen "overblik-projekt.docx" var den fil vi skrev i fællesskab som giver et rigtig godt overblik over de forskellige arbejdsopgaver.
+
+(10-11-2023 - Lars) Jeg er begyndt at skrive GUI og eksperimentere med hvordan denne kunne komme til at se ud.
