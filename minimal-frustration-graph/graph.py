@@ -63,9 +63,30 @@ def global_metric(Graph: list):
     total_frustration *= 0.5
 
 
-def ordered(graph: list) -> list:
+def calculate_local_action(graph, vertex):
+    """ Visit each site of the graph and change (swap) the colour if the local action of the site is negative
+    Parameters
+    ----------
+    graph : TYPE
+        DESCRIPTION.
+    vertex : TYPE
+        DESCRIPTION.
+
+    Returns
+    -------
+    local_action : TYPE
+        DESCRIPTION.
+
+    ### TODO Add tests ###
+
     """
-    Visit each site of the graph and change (swap) the colour if the local action of the site is negative
+    # Example: Using degree as the local action
+    local_action = graph.degree(vertex)
+    return local_action
+
+
+def ordered(graph: dict, vertex) -> dict:
+    """Visit each site of the graph and change (swap) the colour if the local action of the site is negative
 
     Parameters
     ----------
@@ -74,11 +95,16 @@ def ordered(graph: list) -> list:
 
     # add tests
     """
-    # TOOD
+    local_action = calculate_local_action(graph, vertex)
+    if local_action > 0:
+        # Swap color - replace this with your actual color swapping logic
+        current_color = graph.nodes[vertex]['color']
+        new_color = 'red' if current_color != 'red' else 'blue'
+        graph.nodes[vertex]['color'] = new_color
     print("the colors of the sites have been swapped")
 
 
-def max_violation(graph: list) -> list:
+def max_violation(graph_dict: dict) -> dict:
     """
     Identify the site with the largest value of local action and swap its colour.
 
@@ -93,7 +119,7 @@ def max_violation(graph: list) -> list:
     print("the site with the largest value of the local action has had its colours swapped")
 
 
-def monte_carlo(graph: list) -> list:
+def monte_carlo(graph_dict: dict) -> dict:
     """
     Visit each site of the graph and change (swap) the colour if the exponential of the local action is greater 
     than a random number between 0 and 1
