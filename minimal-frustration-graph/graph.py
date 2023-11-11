@@ -14,6 +14,12 @@ Notes
 Module is created as part of the group project for the final exam of DS830 Introduction to programming.
 """
 
+# Import requirements
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+import networkx as nx
+import numpy as np
+
 # local metric function
 
 
@@ -41,7 +47,7 @@ def local_metric(c_i: int, N_J: int) -> float:
 # global metric function
 
 
-def global_metric(Graph: list):
+def global_metric(graph: list):
     """
     Return the sum of the local_metric over every single vertex of the graph.
     The global metric is the measure of the frustration of the graph simulated by the program.
@@ -134,11 +140,37 @@ def monte_carlo(graph_dict: dict) -> dict:
     # TOOD
     print("the site with the largest value of the local action has had its colours swapped")
 
+
 # TODO
 # Store individual frustrations of a site from running the local_metric function
+site_frustration = []
 
 # TODO
 # Store total frustration after each simulation
+total_site_frustration = []
+
+
+def global_metric_history(steps: int, frustration: list[int], update_protocol=None) -> None:
+    """ Display plot of the evolution of total frustration over a specified number of steps
+
+    Parameters
+    ----------
+    frustration : int
+        DESCRIPTION.
+    steps : int
+        DESCRIPTION.
+    """
+    step_list = list(range(1, steps + 1))
+
+    fig, ax = plt.subplots()  # Create a figure containing a single axes.
+    ax.plot(step_list, frustration)  # Plot some data on the axes
+
+    # set labels
+    ax.set_ylabel("Frustration of the graph")
+    ax.set_xlabel("Number of update steps")
+
+    # Display
+    plt.show()
 
 
 # Import doctest module
