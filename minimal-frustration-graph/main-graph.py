@@ -18,7 +18,7 @@ This program is devoped as a group project as part of the exam DS830 Introductio
 """
 # import dependencies
 import graph.py as g
-import visualiser_rndgraph as vrg
+import visualiser_rndgraph.py as vrg
 import random as random
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -68,8 +68,15 @@ def add_edges_from_lines(lines: str) -> list[tuple]:
         # Ignore lines starting with #
         if line.startswith('#'):
             continue
+
         # Split the line by comma
         nodes = line.split(',')
+
+        # Remove '()' from nodes
+        for i in range(len(nodes)):
+            nodes[i] = nodes[i].replace('(', '')
+            nodes[i] = nodes[i].replace(')', '')
+
         # Check if both values are valid integers
         if len(nodes) == 2 and nodes[0].strip().isdigit() and nodes[1].strip().isdigit():
             # Convert nodes to integers and add the edge to the graph
@@ -104,8 +111,6 @@ def create_graph_from_file(file_path: str) -> list[tuple]:
     return graph_edges
 
 
-print(create_graph_from_file('/Users/chrisvandborg/ProjectGraph/test_graph_1.txt'))
-
 # run simulation according to update protocol
 # - Iterate over graph list
 # - - Store local metric
@@ -116,7 +121,6 @@ print(create_graph_from_file('/Users/chrisvandborg/ProjectGraph/test_graph_1.txt
 # End of program, show final analysis graph of frustration
 
 # Allow user to run new simulation or quit program.
-
 
 # Import doctest module
 if __name__ == "__main__":
