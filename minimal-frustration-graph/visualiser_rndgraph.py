@@ -19,7 +19,6 @@ from __future__ import annotations  # to use a class in type hints of its member
 from typing import List, Optional, Dict
 import matplotlib.pyplot as plt
 import networkx as nx
-import random
 
 
 class Visualiser:

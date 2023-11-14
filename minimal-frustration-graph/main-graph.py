@@ -21,8 +21,8 @@ import matplotlib as mlb
 import matplotlib.pyplot as plt
 import networkx as nx
 import random as random
-from . import visualiser_rndgraph as vrg
-from . import graph as g
+from minimal-frustration-graph import visualiser_rndgraph
+from ..graph import local_metric
 
 
 # Create GUI for the user to operate the program
