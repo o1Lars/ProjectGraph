@@ -17,14 +17,12 @@ Notes
 This program is devoped as a group project as part of the exam DS830 Introduction to Programming fall 2023.
 """
 # import dependencies
-import graph.py as g
-import visualiser_rndgraph.py as vrg
-import random as random
-import networkx as nx
-import matplotlib.pyplot as plt
 import matplotlib as mlb
-import sys
-sys.path.append('/Users/chrisvandborg/ProjectGraph/minimal-frustration-graph/visualiser_rndgraph.py')
+import matplotlib.pyplot as plt
+import networkx as nx
+import random as random
+from . import visualiser_rndgraph as vrg
+from . import graph as g
 
 
 # Create GUI for the user to operate the program
