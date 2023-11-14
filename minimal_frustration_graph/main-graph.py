@@ -119,10 +119,26 @@ def create_graph_from_file(file_path: str) -> list[tuple]:
     return graph_edges
 
 
-test_graph = create_graph_from_file(r"C:\Users\Chris\ProjectGraph\test_graph_1.txt")
-print(test_graph)
-vrg.Visualiser(test_graph)
-
+# =============================================================================
+#
+# For testing purpose to see, how visualiser creates a graph and visualises color update.
+# Incomplete code
+#
+#
+# test_graph = create_graph_from_file(r"C:\Users\Chris\ProjectGraph\test_graph_1.txt")
+# print(test_graph)
+# this_test = vrg.Visualiser(test_graph, val_map={1: 0.0, 2: 0.0, 8: 1.0, 12: 1.0})
+#
+# for i in range(10):
+#     this_dict = {
+#         1: random.random(),
+#         2: random.random(),
+#         8: random.random(),
+#         12: random.random(),
+#         }
+#     vrg.Visualiser.update(this_test, val_map=this_dict)
+#
+# =============================================================================
 # run simulation according to update protocol
 # - Iterate over graph list
 # - - Store local metric
