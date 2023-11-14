@@ -16,13 +16,23 @@ Notes
 -----
 This program is devoped as a group project as part of the exam DS830 Introduction to Programming fall 2023.
 """
-# import dependencies
-import matplotlib as mlb
-import matplotlib.pyplot as plt
-import networkx as nx
+import os
+import sys
+
+# Get the directory of the current script
+script_path = sys.argv[0] if hasattr(sys, 'frozen') else __file__
+current_dir = os.path.dirname(os.path.abspath(script_path))
+
+# Append the parent directory to sys.path to enable relative imports
+sys.path.append(os.path.dirname(current_dir))
+
+# Import modules
+from minimal_frustration_graph import visualiser_rndgraph as vrg
+
 import random as random
-from minimal-frustration-graph import visualiser_rndgraph
-from ..graph import local_metric
+
+
+
 
 
 # Create GUI for the user to operate the program
@@ -108,6 +118,10 @@ def create_graph_from_file(file_path: str) -> list[tuple]:
 
     return graph_edges
 
+
+test_graph = create_graph_from_file(r"C:\Users\Chris\ProjectGraph\test_graph_1.txt")
+print(test_graph)
+vrg.Visualiser(test_graph)
 
 # run simulation according to update protocol
 # - Iterate over graph list

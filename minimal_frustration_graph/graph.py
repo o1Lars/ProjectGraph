@@ -16,9 +16,6 @@ Module is created as part of the group project for the final exam of DS830 Intro
 
 # Import requirements
 import matplotlib.pyplot as plt
-import matplotlib as mpl
-import networkx as nx
-import numpy as np
 
 # local metric function
 
