@@ -33,6 +33,10 @@ _tabbg1 = 'grey75'
 _tabbg2 = 'grey89' 
 _bgmode = 'light' 
 
+#############################################################################################################
+##################################### CODE BELOW CONTAINS INPUT VARIABLES ###################################
+#############################################################################################################
+
 class Toplevel1:
     #Below is all button functions
     #This button function browses file dialog and posts the filepath into entry1
@@ -55,7 +59,10 @@ class Toplevel1:
         number_of_iterations = self.Entry3.get()
         print(random_is_checked, num_of_sites, color_pattern, update_procedure, number_of_iterations)
 
-
+#############################################################################################################
+############## ALL CODE BELOW THIS POINT IS PURELY VISUAL, PLACEMENT, SHAPE, COLORS, ETC ####################
+#############################################################################################################
+    
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
