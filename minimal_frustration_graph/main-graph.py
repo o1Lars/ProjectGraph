@@ -101,8 +101,9 @@ class Toplevel1:
 
         # check if graph is connected
 
-        # store colors in dictionairy
-        colors_dict = create_color_dict_from_edges(graph_edges_list, color_pattern)
+        # create new Graph class with vertices, edges, color and frustration
+        new_graph = GraphConstructor(edges=graph_edges_list, colors=color_pattern)
+        print(new_graph)  # console test
 
         # create instance of graph
         # graph_instance = vrg.Visualiser(graph_edges_list, val_map=colors_dict)
@@ -417,11 +418,23 @@ def create_graph_from_file(file_path: str) -> list[tuple]:
     return graph_edges
 
 
-def generate_random_graph_edges(vertices: int) -> list[tuple]:
-    """ Return a list of tuples representing a randomly generated graph
-    """
-    # TODO
-    print(f"created random graph edges with {vertices} number of vertices")
+def generate_random_graph_edges(vertices: int) -> Graph:
+    graph = Graph()
+
+    # Add vertices with random colors and frustrations
+    for vertex in range(1, vertices + 1):
+        color = random.randint(0, 2)  # Replace 2 with the maximum number of colors
+        frustration = 0.0
+        graph.add_vertex(vertex, color, frustration)
+
+    # Add random edges
+    for _ in range(vertices):
+        u = random.randint(1, vertices)
+        v = random.randint(1, vertices)
+        if u != v and (u, v) not in graph.edges and (v, u) not in graph.edges:
+            graph.add_edge((u, v))
+
+    return graph
     
     
 def create_color_dict_from_edges(edges_list: list[tuple], color_pattern) -> dict:
@@ -429,6 +442,34 @@ def create_color_dict_from_edges(edges_list: list[tuple], color_pattern) -> dict
     """
     # TODO
     print("Dictionairy of colors created")
+
+
+class GraphConstructor:
+    """Each instance of this class creates a new graph with vertices, edges, colors.
+    """
+
+    def __init__(self, edges: list[tuple], colors: int):
+        self.vertices = {}
+        self.edges = []
+        self.colors = {}
+
+    def add_vertex(self, vertex, color=0, frustration=0.0):
+        self.vertices[vertex] = {'color': color, 'frustration': frustration}
+
+    def add_edge(self, edge):
+        self.edges.append(edge)
+
+    def get_vertex_color(self, vertex):
+        return self.vertices[vertex]['color']
+
+    def set_vertex_color(self, vertex, color):
+        self.vertices[vertex]['color'] = color
+
+    def get_vertex_frustration(self, vertex):
+        return self.vertices[vertex]['frustration']
+
+    def set_vertex_frustration(self, vertex, frustration):
+        self.vertices[vertex]['frustration'] = frustration
 
 
 # =============================================================================
