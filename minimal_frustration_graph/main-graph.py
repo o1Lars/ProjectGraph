@@ -87,11 +87,32 @@ class Toplevel1:
         update_procedure = self.Spinbox2.get()
         # get number of iterations
         number_of_iterations = self.Entry3.get()
-        # get file from program
-        file_from_path = self.Entry1.get()
-        test_graph = create_graph_from_file(r"" + file_from_path)
-        print(test_graph)
 
+
+        # Store graph edges in list of tuples
+        graph_edges_list = []
+
+        # if random is checked, generate random graph edge list
+        if random_is_checked == 1:
+            graph_edges_list = generate_random_graph_edges(num_of_sites)
+        else:  # get file from program
+            file_from_path = self.Entry1.get()
+            graph_edges_list = create_graph_from_file(r"" + file_from_path)
+
+        # check if graph is connected
+
+        # store colors in dictionairy
+        colors_dict = create_color_dict_from_edges(graph_edges_list, color_pattern)
+
+        # create instance of graph
+        # graph_instance = vrg.Visualiser(graph_edges_list, val_map=colors_dict)
+
+        # simulate update procedure
+        print("update_procedure is:", update_procedure)
+        print("color pattern is", color_pattern)
+        
+        print(graph_edges_list)
+    
 
 #############################################################################################################
 ############## ALL CODE BELOW THIS POINT IS PURELY VISUAL, PLACEMENT, SHAPE, COLORS, ETC ####################
@@ -395,6 +416,19 @@ def create_graph_from_file(file_path: str) -> list[tuple]:
 
     return graph_edges
 
+
+def generate_random_graph_edges(vertices: int) -> list[tuple]:
+    """ Return a list of tuples representing a randomly generated graph
+    """
+    # TODO
+    print(f"created random graph edges with {vertices} number of vertices")
+    
+    
+def create_color_dict_from_edges(edges_list: list[tuple], color_pattern) -> dict:
+    """ Return dictionairy edges with colors
+    """
+    # TODO
+    print("Dictionairy of colors created")
 
 
 # =============================================================================
