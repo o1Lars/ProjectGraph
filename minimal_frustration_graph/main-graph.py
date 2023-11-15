@@ -28,7 +28,7 @@ sys.path.append(os.path.dirname(current_dir))
 
 # Import modules
 from minimal_frustration_graph import visualiser_rndgraph as vrg
-
+from project_graph import GUI_Graph_Frustration as GUI
 import random as random
 
 
