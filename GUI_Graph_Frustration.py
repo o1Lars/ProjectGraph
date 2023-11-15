@@ -3,7 +3,6 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter.constants import *
 import os.path
-import GraphFrustration_support
 import tkinter.filedialog as filedialog
 
 _debug = True  # False to eliminate debug printing from callback functions.
@@ -65,7 +64,7 @@ class Toplevel1:
         top.minsize(120, 1)
         top.maxsize(1540, 845)
         top.resizable(1,  1)
-        top.title("Toplevel 0")
+        top.title("GUI Graph Frustration")
         top.configure(background="#46aefb")
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="black")
