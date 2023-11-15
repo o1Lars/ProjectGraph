@@ -102,8 +102,7 @@ class Toplevel1:
         # check if graph is connected
 
         # create new Graph class with vertices, edges, color and frustration
-        new_graph = GraphConstructor(edges=graph_edges_list, colors=color_pattern)
-        print(new_graph)  # console test
+        
 
         # create instance of graph
         # graph_instance = vrg.Visualiser(graph_edges_list, val_map=colors_dict)
@@ -418,25 +417,6 @@ def create_graph_from_file(file_path: str) -> list[tuple]:
     return graph_edges
 
 
-def generate_random_graph_edges(vertices: int) -> Graph:
-    graph = Graph()
-
-    # Add vertices with random colors and frustrations
-    for vertex in range(1, vertices + 1):
-        color = random.randint(0, 2)  # Replace 2 with the maximum number of colors
-        frustration = 0.0
-        graph.add_vertex(vertex, color, frustration)
-
-    # Add random edges
-    for _ in range(vertices):
-        u = random.randint(1, vertices)
-        v = random.randint(1, vertices)
-        if u != v and (u, v) not in graph.edges and (v, u) not in graph.edges:
-            graph.add_edge((u, v))
-
-    return graph
-    
-    
 def create_color_dict_from_edges(edges_list: list[tuple], color_pattern) -> dict:
     """ Return dictionairy edges with colors
     """
@@ -444,32 +424,43 @@ def create_color_dict_from_edges(edges_list: list[tuple], color_pattern) -> dict
     print("Dictionairy of colors created")
 
 
-class GraphConstructor:
-    """Each instance of this class creates a new graph with vertices, edges, colors.
+def create_graph_dict(edges_list: list[tuple], color_pattern: int) -> dict:
+    """Creates a dictionairy of vertices from edges and a color pattern.
     """
+    # Create dict and vertices
+    graph_dict = {}
+    graph_vertices = []
 
-    def __init__(self, edges: list[tuple], colors: int):
-        self.vertices = {}
-        self.edges = []
-        self.colors = {}
+    # Iterate over edges_list and append vertex
+    for edge_tuple in edges_list:
+        x, y = edge_tuple  # Unpack the tuple into x and y
+        # check if vertices already in graph_dict
+        if x not in graph_vertices:
+            graph_vertices.append(x)
+        if y not in graph_vertices:
+            graph_vertices.append(y)
 
-    def add_vertex(self, vertex, color=0, frustration=0.0):
-        self.vertices[vertex] = {'color': color, 'frustration': frustration}
+    # Add vertex to graph_dict
+    for vertex in graph_vertices:
+        graph_dict[vertex] = {}
 
-    def add_edge(self, edge):
-        self.edges.append(edge)
+    # Add color pattern to vertex
+    for vertex in graph_dict:
+        # add color pattern to vertex
+        if color_pattern == 0 or color_pattern == 1:
+            graph_dict[vertex]["color"] = color_pattern
+        else:  # if color pattern not 0 or 1, randomly assign color value
+            color = random.randint(0, 1)
+            graph_dict[vertex]["color"] = color
 
-    def get_vertex_color(self, vertex):
-        return self.vertices[vertex]['color']
+    return graph_dict
 
-    def set_vertex_color(self, vertex, color):
-        self.vertices[vertex]['color'] = color
 
-    def get_vertex_frustration(self, vertex):
-        return self.vertices[vertex]['frustration']
 
-    def set_vertex_frustration(self, vertex, frustration):
-        self.vertices[vertex]['frustration'] = frustration
+    
+
+
+
 
 
 # =============================================================================
