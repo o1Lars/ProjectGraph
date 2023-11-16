@@ -12,9 +12,8 @@ Notes
 Module is created as part of the group project for the final exam of DS830 Introduction to programming.
 """
 
-
-import matplotlib.pyplot as plt
 from __future__ import annotations  # to use a class in type hints of its members
+import matplotlib.pyplot as plt
 from typing import List, Optional, Dict
 import random as random
 
@@ -30,36 +29,42 @@ class Graph:
     def __init__(self,
                  edges: list,
                  color_pattern: int,
-                 vertices: Optional[dict] = {}) -> None:
+                 vertices_dict: Optional[Dict] = {},
+                 total_frustration: Optional[List] = []) -> None:
         """
         Parameters
         ----------
         edges: List[(int,int)]
-          List containing the edges (Tuples of 2 vertices) forming the 2D surface for the simulation.
-        val_map: Dict[int:float]
-          Dictionary containing the color of each vertex (expressed as a float)
-        def_col:
-          Color of the vertices not reported in val_map
-        node_size: int, default 500
-          Control the size of the drawn nodes
-        window_title : Optional[str], default = None
-          The title of the window.
+          List containing the edges (Tuples of 2 vertices) forming the 2D surface for the graph.
+        color_pattern:
+          Color of the vertices
+        vertices_dict: Optional[dict], default = {}
+          dictionary with vertices as key and values for each vertex: color, frustration, neighbours
+        total_frustration: Optional[float], default = 0
+          The graphs total frustration over numbers of iterations/simulation
         """
         self.edges = edges
         self.color_pattern = color_pattern
-        self.vertices = self.create_graph_dict(self.edges, self.color_pattern)
+        self.vertices_dict = self.create_graph_dict(self.edges, self.color_pattern)
+        self.total_frustration = []
 
+
+# =============================================================================
+#         # calculate and add initial site frustration to vertices_dict
+#         for vertex in self.vertices_dict:
+#             c_i = self.vertex['color']
+#             N_J = [G_random.nodes[neighbour]['color'] for neighbour in neighbours_dict_G_random[node]]
+#             frustration = local_metric(c_i, N_J)
+#             frustration_list.append(frustration)
+#             print(f"Frustration for Node {node}: {frustration}")
+# =============================================================================
+        # identify and add neighbours of each site to vertices_dict
+        # calculate initial total frustration at instance construction
 
     # class methods
-    def create_color_dict_from_edges(self, edges: list[tuple], color_pattern) -> dict:
-        """ Return dictionairy edges with colors
-        """
-        # TODO
-        print("Dictionairy of colors created")
-
 
     def create_graph_dict(self, edges: list[tuple], color_pattern: int) -> dict:
-        """Creates a dictionairy of vertices from edges and a color pattern.
+        """Creates a dictionary of vertices from edges and a color pattern.
         """
         # Create dict and vertices
         graph_dict = {}
@@ -84,11 +89,30 @@ class Graph:
             if color_pattern == 0 or color_pattern == 1:
                 graph_dict[vertex]["color"] = color_pattern
             else:  # if color pattern not 0 or 1, randomly assign color value
+                random.seed(10)
                 color = random.randint(0, 1)
                 graph_dict[vertex]["color"] = color
 
-        return graph_dict
+        # add neighbours to dictionary
+        # Iterate over dictionary
+        for vertex in graph_dict:
+            # Store list of neighbours
+            neighbours_list = []
 
+            # Iterate over edges
+            for edge_tuple in edges:
+                x, y = edge_tuple  # split tuple into two values
+
+                # If neighbour not already added, append to neighbours list
+                if x not in neighbours_list and x != vertex and y == vertex:
+                    neighbours_list.append(x)
+                if y not in neighbours_list and x == vertex and y != vertex:
+                    neighbours_list.append(y)
+
+                # add neighbour list to dictionary
+                graph_dict[vertex]['neighbours'] = neighbours_list
+
+        return graph_dict
 
 
     def local_metric(c_i: int, N_J: int) -> float:
@@ -115,7 +139,7 @@ class Graph:
     # global metric function
 
 
-    def global_metric(graph: list):
+    def global_metric(self, graph: list):
         """
         Return the sum of the local_metric over every single vertex of the graph.
         The global metric is the measure of the frustration of the graph simulated by the program.
@@ -207,6 +231,28 @@ class Graph:
         """
         # TOOD
         print("the site with the largest value of the local action has had its colours swapped")
+    
+    def global_metric_history(steps: int, frustration: list[int], update_protocol=None) -> None:
+        """ Display plot of the evolution of total frustration over a specified number of steps
+
+        Parameters
+        ----------
+        frustration : int
+            DESCRIPTION.
+        steps : int
+            DESCRIPTION.
+        """
+        step_list = list(range(1, steps + 1))
+
+        fig, ax = plt.subplots()  # Create a figure containing a single axes.
+        ax.plot(step_list, frustration)  # Plot some data on the axes
+
+        # set labels
+        ax.set_ylabel("Frustration of the graph")
+        ax.set_xlabel("Number of update steps")
+
+        # Display
+        plt.show()
 
 
 # TODO
@@ -218,27 +264,7 @@ site_frustration = []
 total_site_frustration = []
 
 
-def global_metric_history(steps: int, frustration: list[int], update_protocol=None) -> None:
-    """ Display plot of the evolution of total frustration over a specified number of steps
 
-    Parameters
-    ----------
-    frustration : int
-        DESCRIPTION.
-    steps : int
-        DESCRIPTION.
-    """
-    step_list = list(range(1, steps + 1))
-
-    fig, ax = plt.subplots()  # Create a figure containing a single axes.
-    ax.plot(step_list, frustration)  # Plot some data on the axes
-
-    # set labels
-    ax.set_ylabel("Frustration of the graph")
-    ax.set_xlabel("Number of update steps")
-
-    # Display
-    plt.show()
 
 
 # Import doctest module
