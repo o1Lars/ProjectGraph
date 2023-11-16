@@ -417,45 +417,6 @@ def create_graph_from_file(file_path: str) -> list[tuple]:
     return graph_edges
 
 
-def create_color_dict_from_edges(edges_list: list[tuple], color_pattern) -> dict:
-    """ Return dictionairy edges with colors
-    """
-    # TODO
-    print("Dictionairy of colors created")
-
-
-def create_graph_dict(edges_list: list[tuple], color_pattern: int) -> dict:
-    """Creates a dictionairy of vertices from edges and a color pattern.
-    """
-    # Create dict and vertices
-    graph_dict = {}
-    graph_vertices = []
-
-    # Iterate over edges_list and append vertex
-    for edge_tuple in edges_list:
-        x, y = edge_tuple  # Unpack the tuple into x and y
-        # check if vertices already in graph_dict
-        if x not in graph_vertices:
-            graph_vertices.append(x)
-        if y not in graph_vertices:
-            graph_vertices.append(y)
-
-    # Add vertex to graph_dict
-    for vertex in graph_vertices:
-        graph_dict[vertex] = {}
-
-    # Add color pattern to vertex
-    for vertex in graph_dict:
-        # add color pattern to vertex
-        if color_pattern == 0 or color_pattern == 1:
-            graph_dict[vertex]["color"] = color_pattern
-        else:  # if color pattern not 0 or 1, randomly assign color value
-            color = random.randint(0, 1)
-            graph_dict[vertex]["color"] = color
-
-    return graph_dict
-
-
 
     
 
