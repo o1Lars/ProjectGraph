@@ -6,7 +6,7 @@ Requirements
 Package matplotlib https://matplotlib.org/ which can be installed via PIP.
 Package networkx https://networkx.org/ which can be installed via PIP.
 Python 3.7 or higher.
-
+s¤
 Notes
 -----
 Module is created as part of the group project for the final exam of DS830 Introduction to programming.
@@ -48,18 +48,16 @@ class Graph:
         self.vertices_dict = self.create_graph_dict(self.edges, self.color_pattern)
         self.total_frustration = []
 
+        # calculate and add initial site frustration to vertices_dict
+        for vertex in self.vertices_dict:
+            c_i = self.vertices_dict[vertex]['color']
+            n_J = [self.vertices_dict[neighbour]['color'] for neighbour in self.vertices_dict[vertex]['neighbours']]
+            frustration = self.local_metric(c_i, n_J)
+            self.vertices_dict[vertex]['frustration'] = frustration
+            print(f"Frustration for vertex {vertex}: {frustration}")
 
-# =============================================================================
-#         # calculate and add initial site frustration to vertices_dict
-#         for vertex in self.vertices_dict:
-#             c_i = self.vertex['color']
-#             N_J = [G_random.nodes[neighbour]['color'] for neighbour in neighbours_dict_G_random[node]]
-#             frustration = local_metric(c_i, N_J)
-#             frustration_list.append(frustration)
-#             print(f"Frustration for Node {node}: {frustration}")
-# =============================================================================
-        # identify and add neighbours of each site to vertices_dict
         # calculate initial total frustration at instance construction
+        self.total_frustration.append(self.global_metric(self.vertices_dict))
 
     # class methods
 
@@ -114,8 +112,7 @@ class Graph:
 
         return graph_dict
 
-
-    def local_metric(c_i: int, N_J: int) -> float:
+    def local_metric(self, c_i: int, n_j: int) -> float:
         """
         Return  the frustration of a site
 
@@ -127,19 +124,16 @@ class Graph:
         """
 
         # Store local metric total
-        total = 0
-
-        # Iterate
-        for j in range(1, N_J + 1):
-            total += (1 - 2 * c_i) * (1 - 2 * (1 - j))
-        return total
+        total_frustration = 0.0
+        for c_j in n_j:
+            total_frustration += (1 - 2 * c_i) * (1 - 2 * c_j)
+        return total_frustration
         # TODO -> Add so this function properly adds the total to list for storing the values through the iteration
         # Possibly not part of function but added when calling the function
 
     # global metric function
 
-
-    def global_metric(self, graph: list):
+    def global_metric(self, vertices: dict) -> float:
         """
         Return the sum of the local_metric over every single vertex of the graph.
         The global metric is the measure of the frustration of the graph simulated by the program.
@@ -152,36 +146,17 @@ class Graph:
         """
 
         # Store total frustration
-        total_frustration = 0
+        total_frustration = 0.0
 
-        # iterate over list/set of site frustations and add them to total frustration
-        # TODO
+        # iterate over dictionary of vertices
+        for vertex in vertices:
+            # add all vertex frustrations to total
+            total_frustration += vertices[vertex]['frustration']
 
         # Multiply total_frustration by 1/2 as per the provided formula.
         total_frustration *= 0.5
 
-
-    def calculate_local_action(graph, vertex):
-        """ Visit each site of the graph and change (swap) the colour if the local action of the site is negative
-        Parameters
-        ----------
-        graph : TYPE
-            DESCRIPTION.
-        vertex : TYPE
-            DESCRIPTION.
-
-        Returns
-        -------
-        local_action : TYPE
-            DESCRIPTION.
-
-        ### TODO Add tests ###
-
-        """
-        # Example: Using degree as the local action
-        local_action = graph.degree(vertex)
-        return local_action
-
+        return total_frustration
 
     def ordered(graph: dict, vertex) -> dict:
         """Visit each site of the graph and change (swap) the colour if the local action of the site is negative
@@ -193,7 +168,7 @@ class Graph:
 
         # add tests
         """
-        local_action = calculate_local_action(graph, vertex)
+        local_action = -1  # fixes TODO TODO TODO
         if local_action > 0:
             # Swap color - replace this with your actual color swapping logic
             current_color = graph.nodes[vertex]['color']
@@ -253,17 +228,6 @@ class Graph:
 
         # Display
         plt.show()
-
-
-# TODO
-# Store individual frustrations of a site from running the local_metric function
-site_frustration = []
-
-# TODO
-# Store total frustration after each simulation
-total_site_frustration = []
-
-
 
 
 
