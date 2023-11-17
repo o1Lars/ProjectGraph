@@ -50,14 +50,6 @@ class Graph:
 
         # calculate and add initial site frustration to vertices_dict
         self.update_vertex_frustration()
-# =============================================================================
-#         for vertex in self.vertices_dict:
-#             c_i = self.vertices_dict[vertex]['color']
-#             n_J = [self.vertices_dict[neighbour]['color'] for neighbour in self.vertices_dict[vertex]['neighbours']]
-#             frustration = self.local_metric(c_i, n_J)
-#             self.vertices_dict[vertex]['frustration'] = frustration
-#             print(f"Frustration for vertex {vertex}: {frustration}")
-# =============================================================================
 
         # calculate initial total frustration at instance construction
         self.total_frustration.append(self.global_metric(self.vertices_dict))
