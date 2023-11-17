@@ -171,7 +171,7 @@ class Graph:
             self.vertices_dict[vertex]['frustration'] = frustration
             print(f"Frustration for vertex {vertex}: {frustration}")
 
-    def update_ordered(self) -> dict:
+    def update_ordered(self) -> None:
         """Visit each site of the graph and change (swap) the colour if the local action of the site is positive
 
         Parameters
@@ -187,14 +187,17 @@ class Graph:
             local_action = self.vertices_dict[vertex]['frustration']
             if local_action >= 0:
                 current_color = self.vertices_dict[vertex]['color']  # set current color
-                new_color = 1.0 if current_color != 'red' else 'blue'  # swap current color
+                new_color = 1.0 if current_color != 1.0 else 1.0  # swap current color
                 self.vertices_dict[vertex]['color'] = new_color
             print("the colors of the sites have been swapped")
 
-        # TODO calculate new frustration for each vertex
+        # calculate new frustration for each vertex
         self.update_vertex_frustration()
+        
+        # compute new total frustration and add to list
+        self.total_frustration.append(self.global_metric(self.vertices_dict))
 
-    def update_max_violation(graph_dict: dict) -> dict:
+    def update_max_violation(self) -> None:
         """
         Identify the site with the largest value of local action and swap its colour.
 
@@ -205,8 +208,32 @@ class Graph:
 
         # add tests
         """
-        # TOOD
+        # store vertix with largest local action
+        largest_action = None
+        largest_vertex = None
+
+        # iterate over dictionary
+        for vertex in self.vertices_dict:
+            # set current local action
+            current_action = self.vertices_dict[vertex]['frustration']
+
+            # check if local action of current vertex > largest
+            if largest_action is None or current_action > largest_action:
+                largest_action = current_action  # set new largest action value
+                largest_vertex = vertex  # track vertex with largest action value
+
+        # swap the color of vertex with largest local action
+        if self.vertices_dict[largest_vertex]['color'] == 1.0:
+            self.vertices_dict[largest_vertex]['color'] = 0.0
+        else:
+            self.vertices_dict[largest_vertex]['color'] = 1.0
+
+        # calculate new frustration for each vertex
+        self.update_vertex_frustration()
         print("the site with the largest value of the local action has had its colours swapped")
+
+        # compute new total frustration and add to list
+        self.total_frustration.append(self.global_metric(self.vertices_dict))
 
     def update_monte_carlo(graph_dict: dict) -> dict:
         """
