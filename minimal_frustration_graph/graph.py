@@ -176,7 +176,6 @@ class Graph:
             graph.nodes[vertex]['color'] = new_color
         print("the colors of the sites have been swapped")
 
-
     def max_violation(graph_dict: dict) -> dict:
         """
         Identify the site with the largest value of local action and swap its colour.
@@ -191,10 +190,9 @@ class Graph:
         # TOOD
         print("the site with the largest value of the local action has had its colours swapped")
 
-
     def monte_carlo(graph_dict: dict) -> dict:
         """
-        Visit each site of the graph and change (swap) the colour if the exponential of the local action is greater 
+        Visit each site of the graph and change (swap) the colour if the exponential of the local action is greater
         than a random number between 0 and 1
 
         Parameters
@@ -206,8 +204,8 @@ class Graph:
         """
         # TOOD
         print("the site with the largest value of the local action has had its colours swapped")
-    
-    def global_metric_history(steps: int, frustration: list[int], update_protocol=None) -> None:
+
+    def report_frustration_history(self, steps: int) -> None:
         """ Display plot of the evolution of total frustration over a specified number of steps
 
         Parameters
@@ -218,6 +216,7 @@ class Graph:
             DESCRIPTION.
         """
         step_list = list(range(1, steps + 1))
+        frustration = self.total_frustration
 
         fig, ax = plt.subplots()  # Create a figure containing a single axes.
         ax.plot(step_list, frustration)  # Plot some data on the axes
@@ -228,7 +227,6 @@ class Graph:
 
         # Display
         plt.show()
-
 
 
 # Import doctest module
