@@ -193,7 +193,7 @@ class Graph:
 
         # calculate new frustration for each vertex
         self.update_vertex_frustration()
-        
+
         # compute new total frustration and add to list
         self.total_frustration.append(self.global_metric(self.vertices_dict))
 
