@@ -49,12 +49,15 @@ class Graph:
         self.total_frustration = []
 
         # calculate and add initial site frustration to vertices_dict
-        for vertex in self.vertices_dict:
-            c_i = self.vertices_dict[vertex]['color']
-            n_J = [self.vertices_dict[neighbour]['color'] for neighbour in self.vertices_dict[vertex]['neighbours']]
-            frustration = self.local_metric(c_i, n_J)
-            self.vertices_dict[vertex]['frustration'] = frustration
-            print(f"Frustration for vertex {vertex}: {frustration}")
+        self.update_vertex_frustration()
+# =============================================================================
+#         for vertex in self.vertices_dict:
+#             c_i = self.vertices_dict[vertex]['color']
+#             n_J = [self.vertices_dict[neighbour]['color'] for neighbour in self.vertices_dict[vertex]['neighbours']]
+#             frustration = self.local_metric(c_i, n_J)
+#             self.vertices_dict[vertex]['frustration'] = frustration
+#             print(f"Frustration for vertex {vertex}: {frustration}")
+# =============================================================================
 
         # calculate initial total frustration at instance construction
         self.total_frustration.append(self.global_metric(self.vertices_dict))
@@ -158,8 +161,18 @@ class Graph:
 
         return total_frustration
 
-    def ordered(graph: dict, vertex) -> dict:
-        """Visit each site of the graph and change (swap) the colour if the local action of the site is negative
+    def update_vertex_frustration(self):
+        """Updates frustration for each vertex
+        """
+        for vertex in self.vertices_dict:
+            c_i = self.vertices_dict[vertex]['color']
+            n_J = [self.vertices_dict[neighbour]['color'] for neighbour in self.vertices_dict[vertex]['neighbours']]
+            frustration = self.local_metric(c_i, n_J)
+            self.vertices_dict[vertex]['frustration'] = frustration
+            print(f"Frustration for vertex {vertex}: {frustration}")
+
+    def update_ordered(self) -> dict:
+        """Visit each site of the graph and change (swap) the colour if the local action of the site is positive
 
         Parameters
         ----------
@@ -168,15 +181,20 @@ class Graph:
 
         # add tests
         """
-        local_action = -1  # fixes TODO TODO TODO
-        if local_action > 0:
-            # Swap color - replace this with your actual color swapping logic
-            current_color = graph.nodes[vertex]['color']
-            new_color = 'red' if current_color != 'red' else 'blue'
-            graph.nodes[vertex]['color'] = new_color
-        print("the colors of the sites have been swapped")
+        # iterate over vertices in vertices_dictionary
+        for vertex in self.vertices_dict:
+            # set local action for each vertex
+            local_action = self.vertices_dict[vertex]['frustration']
+            if local_action >= 0:
+                current_color = self.vertices_dict[vertex]['color']  # set current color
+                new_color = 1.0 if current_color != 'red' else 'blue'  # swap current color
+                self.vertices_dict[vertex]['color'] = new_color
+            print("the colors of the sites have been swapped")
 
-    def max_violation(graph_dict: dict) -> dict:
+        # TODO calculate new frustration for each vertex
+        self.update_vertex_frustration()
+
+    def update_max_violation(graph_dict: dict) -> dict:
         """
         Identify the site with the largest value of local action and swap its colour.
 
@@ -190,7 +208,7 @@ class Graph:
         # TOOD
         print("the site with the largest value of the local action has had its colours swapped")
 
-    def monte_carlo(graph_dict: dict) -> dict:
+    def update_monte_carlo(graph_dict: dict) -> dict:
         """
         Visit each site of the graph and change (swap) the colour if the exponential of the local action is greater
         than a random number between 0 and 1
