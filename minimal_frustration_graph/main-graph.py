@@ -28,6 +28,7 @@ sys.path.append(os.path.dirname(current_dir))
 
 # Import dependencies
 from minimal_frustration_graph import visualiser_rndgraph as vrg
+from minimal_frustration_graph import graph as g
 import random as random
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -86,7 +87,7 @@ class Toplevel1:
         # get update procedure
         update_procedure = self.Spinbox2.get()
         # get number of iterations
-        number_of_iterations = self.Entry3.get()
+        number_of_iterations = int(self.Entry3.get())
 
 
         # Store graph edges in list of tuples
@@ -98,9 +99,17 @@ class Toplevel1:
         else:  # get file from program
             file_from_path = self.Entry1.get()
             graph_edges_list = create_graph_from_file(r"" + file_from_path)
-
-        # check if graph is connected
-
+        
+# =============================================================================
+# Just test code
+#         # check if graph is connected
+#         test_graph = g.Graph(graph_edges_list, color_pattern)
+#         
+#         for num in range(number_of_iterations):
+#             test_graph.update_max_violation()
+#         
+#         test_graph.report_frustration_history(11)
+# =============================================================================
         # create new Graph class with vertices, edges, color and frustration
         
 
