@@ -95,13 +95,12 @@ class Toplevel1:
 
         # if random is checked, generate random graph edge list
         if random_is_checked == 1:
-            graph_edges_list = generate_random_graph_edges(num_of_sites)
+            graph_edges_list = generate_random_graph(num_of_sites)
         else:  # get file from program
             file_from_path = self.Entry1.get()
             graph_edges_list = create_graph_from_file(r"" + file_from_path)
         # check that graph is connected
 
-        # check if graph is connected
         test_graph = g.Graph(graph_edges_list, color_pattern)
 
         for num in range(number_of_iterations):
