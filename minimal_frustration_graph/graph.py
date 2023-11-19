@@ -173,14 +173,17 @@ class Graph:
 
         # add tests
         """
+        # variabel for dictionary
+        vd = self.vertices_dict
+
         # iterate over vertices in vertices_dictionary
-        for vertex in self.vertices_dict:
+        for vertex in vd:
             # set local action for each vertex
-            local_action = self.vertices_dict[vertex]['frustration']
+            local_action = vd[vertex]['frustration']
             if local_action >= 0:
-                current_color = self.vertices_dict[vertex]['color']  # set current color
+                current_color = vd[vertex]['color']  # set current color
                 new_color = 1.0 if current_color != 1.0 else 1.0  # swap current color
-                self.vertices_dict[vertex]['color'] = new_color
+                vd[vertex]['color'] = new_color
             print("the colors of the sites have been swapped")
 
         # calculate new frustration for each vertex
