@@ -203,14 +203,18 @@ class Graph:
 
         # add tests
         """
+
+        # variabel for dictionary
+        vd = self.vertices_dict
+
         # store vertix with largest local action
         largest_action = None
         largest_vertex = None
 
         # iterate over dictionary
-        for vertex in self.vertices_dict:
+        for vertex in vd:
             # set current local action
-            current_action = self.vertices_dict[vertex]['frustration']
+            current_action = vd[vertex]['frustration']
 
             # check if local action of current vertex > largest
             if largest_action is None or current_action > largest_action:
@@ -218,10 +222,10 @@ class Graph:
                 largest_vertex = vertex  # track vertex with largest action value
 
         # swap the color of vertex with largest local action
-        if self.vertices_dict[largest_vertex]['color'] == 1.0:
-            self.vertices_dict[largest_vertex]['color'] = 0.0
+        if vd[largest_vertex]['color'] == 1.0:
+            vd[largest_vertex]['color'] = 0.0
         else:
-            self.vertices_dict[largest_vertex]['color'] = 1.0
+            vd[largest_vertex]['color'] = 1.0
 
         # calculate new frustration for each vertex
         self.update_vertex_frustration()
