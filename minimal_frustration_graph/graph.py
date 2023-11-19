@@ -181,13 +181,12 @@ class Graph:
             # set local action for each vertex
             local_action = dictionary[vertex]['frustration']
             if local_action >= 0:
-                current_color = dictionary[vertex]['color']  # set current color
-                new_color = 1.0 if current_color != 1.0 else 1.0  # swap current color
+                current_color = dictionary[vertex]['color']         # set current color
+                new_color = 1.0 if current_color != 1.0 else 1.0    # swap current color
                 dictionary[vertex]['color'] = new_color
+                self.update_vertex_frustration()                    # update vertices frustration
             print("the colors of the sites have been swapped")
 
-        # calculate new frustration for each vertex
-        self.update_vertex_frustration()
 
         # compute new total frustration and add to list
         self.total_frustration.append(self.global_metric(self.vertices_dict))
