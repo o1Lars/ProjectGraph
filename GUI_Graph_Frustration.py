@@ -7,6 +7,7 @@ import tkinter.filedialog as filedialog
 
 _debug = True  # False to eliminate debug printing from callback functions.
 
+
 def main(*args):
     '''Main entry point for the application.'''
     global root
@@ -24,22 +25,23 @@ _location = os.path.dirname(_script)
 
 _bgcolor = '#d9d9d9'  # X11 color: 'gray85'
 _fgcolor = '#000000'  # X11 color: 'black'
-_compcolor = 'gray40' # X11 color: #666666
-_ana1color = '#c3c3c3' # Closest X11 color: 'gray76'
-_ana2color = 'beige' # X11 color: #f5f5dc
-_tabfg1 = 'black' 
-_tabfg2 = 'black' 
-_tabbg1 = 'grey75' 
-_tabbg2 = 'grey89' 
-_bgmode = 'light' 
+_compcolor = 'gray40'  # X11 color: #666666
+_ana1color = '#c3c3c3'  # Closest X11 color: 'gray76'
+_ana2color = 'beige'  # X11 color: #f5f5dc
+_tabfg1 = 'black'
+_tabfg2 = 'black'
+_tabbg1 = 'grey75'
+_tabbg2 = 'grey89'
+_bgmode = 'light'
+
 
 #############################################################################################################
 ##################################### CODE BELOW CONTAINS INPUT VARIABLES ###################################
 #############################################################################################################
 
 class Toplevel1:
-    #Below is all button functions
-    #This button function browses file dialog and posts the filepath into entry1
+    # Below is all button functions
+    # This button function browses file dialog and posts the filepath into entry1
     def browse_file(self):
         file_path = filedialog.askopenfilename()
         if file_path:
@@ -47,22 +49,64 @@ class Toplevel1:
             self.Entry1.insert(0, file_path)
 
     def generate_graph(self):
-        #random check button
-        random_is_checked = self.che51.get()
-        #get number of sites when random checked
-        num_of_sites = self.Entry2.get()
-        #get color pattern
-        color_pattern = self.Spinbox1.get()
-        #get update procedure
-        update_procedure = self.Spinbox2.get()
-        #get number of iterations
-        number_of_iterations = self.Entry3.get()
-        print(random_is_checked, num_of_sites, color_pattern, update_procedure, number_of_iterations)
+        try:
+            # random check button
+            random_is_checked = self.che51.get()
 
-#############################################################################################################
-############## ALL CODE BELOW THIS POINT IS PURELY VISUAL, PLACEMENT, SHAPE, COLORS, ETC ####################
-#############################################################################################################
-    
+            # get number of sites when random checked
+            num_of_sites = int(self.Entry2.get()) if self.Entry2.get() else 0
+
+            # get color pattern
+            color_pattern = str(self.Spinbox1.get())
+
+            # get update procedure
+            update_procedure = str(self.Spinbox2.get())
+
+            # get number of iterations
+            number_of_iterations = int(self.Entry3.get()) if self.Entry3.get() else 0
+
+            print(random_is_checked, num_of_sites, color_pattern, update_procedure, number_of_iterations)
+
+        except ValueError:
+            self.display_error_message("Please enter valid numerical values for number of sites and iterations.")
+       
+        #Try except clause below for number of sites
+        try:
+            num_of_sites = int(num_of_sites)
+            if num_of_sites > 50 or num_of_sites < 0:
+                raise ValueError("Number of sites cannot be negative or exceed 50.")
+        except ValueError as e:
+            # Display error message
+            error_message = f"Error: {e}"
+            self.display_error_message(error_message)
+            return
+        #try except clause below for number of iterations
+        try:
+            number_of_iterations = int(number_of_iterations)
+            if number_of_iterations < 0:
+                raise ValueError("Number of iterations cannot be negative.")
+        except ValueError as e:
+            # Display error message
+            error_message = f"Error: {e}"
+            self.display_error_message(error_message)
+            return
+        #Error message for choosing both file path and checking random graph
+        if self.Entry1.get() and random_is_checked:
+            self.display_error_message('Please select either "Enter file directory" or "Generate random graph", not both.')
+
+    def display_error_message(self, message):
+        error_popup = tk.Toplevel(self.top)
+        error_popup.title("Error")
+        error_popup.geometry("400x100")
+        error_label = tk.Label(error_popup, text=message, font="-family {Segoe UI} -size 12", fg="red")
+        error_label.pack(pady=20)
+        ok_button = tk.Button(error_popup, text="OK", command=error_popup.destroy)
+        ok_button.pack()
+
+    #############################################################################################################
+    ############## ALL CODE BELOW THIS POINT IS PURELY VISUAL, PLACEMENT, SHAPE, COLORS, ETC ####################
+    #############################################################################################################
+
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -70,7 +114,7 @@ class Toplevel1:
         top.geometry("415x413+475+195")
         top.minsize(120, 1)
         top.maxsize(1540, 845)
-        top.resizable(1,  1)
+        top.resizable(1, 1)
         top.title("GUI Graph Frustration")
         top.configure(background="#46aefb")
         top.configure(highlightbackground="#d9d9d9")
@@ -101,7 +145,7 @@ class Toplevel1:
         self.Label2.configure(text='''Graph configurations''')
         self.Checkbutton1 = tk.Checkbutton(self.Frame1)
         self.Checkbutton1.place(relx=0.423, rely=0.189, relheight=0.06
-                , relwidth=0.18)
+                                , relwidth=0.18)
         self.Checkbutton1.configure(activebackground="beige")
         self.Checkbutton1.configure(activeforeground="black")
         self.Checkbutton1.configure(anchor='w')
@@ -187,9 +231,9 @@ class Toplevel1:
         self.Label7.configure(highlightbackground="#d9d9d9")
         self.Label7.configure(highlightcolor="black")
         self.Label7.configure(text='''Choose update procedure:''')
-        self.Spinbox1 = tk.Spinbox(self.Frame1, from_=1.0, to=100.0)
+        self.Spinbox1 = tk.Spinbox(self.Frame1, from_=1.0, to=100.0, state="readonly")
         self.Spinbox1.place(relx=0.445, rely=0.34, relheight=0.045
-                , relwidth=0.192)
+                            , relwidth=0.192)
         self.Spinbox1.configure(activebackground="#f9f9f9")
         self.Spinbox1.configure(background="white")
         self.Spinbox1.configure(buttonbackground="#d9d9d9")
@@ -201,7 +245,7 @@ class Toplevel1:
         self.Spinbox1.configure(insertbackground="black")
         self.Spinbox1.configure(selectbackground="#c4c4c4")
         self.Spinbox1.configure(selectforeground="black")
-        self.value_list = ['All 0','All 1','All random',]
+        self.value_list = ['All 0', 'All 1', 'All random', ]
         self.Spinbox1.configure(values=self.value_list)
         self.Button1 = tk.Button(self.Frame1)
         self.Button1.place(relx=0.067, rely=0.548, height=44, width=357)
@@ -264,9 +308,8 @@ class Toplevel1:
         self.Entry3.configure(insertbackground="black")
         self.Entry3.configure(selectbackground="#c4c4c4")
         self.Entry3.configure(selectforeground="black")
-        self.Spinbox2 = tk.Spinbox(self.Frame1, from_=1.0, to=100.0)
-        self.Spinbox2.place(relx=0.445, rely=0.416, relheight=0.036
-                , relwidth=0.234)
+        self.Spinbox2 = tk.Spinbox(self.Frame1, from_=1.0, to=100.0, state="readonly")
+        self.Spinbox2.place(relx=0.445, rely=0.416, relheight=0.036, relwidth=0.234)
         self.Spinbox2.configure(activebackground="#f9f9f9")
         self.Spinbox2.configure(background="white")
         self.Spinbox2.configure(buttonbackground="#d9d9d9")
@@ -278,7 +321,7 @@ class Toplevel1:
         self.Spinbox2.configure(insertbackground="black")
         self.Spinbox2.configure(selectbackground="#c4c4c4")
         self.Spinbox2.configure(selectforeground="black")
-        self.value_list = ['Ordered','MaxViolation','MonteCarlo',]
+        self.value_list = ['Ordered', 'MaxViolation', 'MonteCarlo', ]
         self.Spinbox2.configure(values=self.value_list)
         self.Label1 = tk.Label(self.top)
         self.Label1.place(relx=0.19, rely=0.024, height=43, width=319)
@@ -292,8 +335,8 @@ class Toplevel1:
         self.Label1.configure(highlightbackground="#46aefb")
         self.Label1.configure(highlightcolor="#ffffff")
         self.Label1.configure(text='''Graph Frustration''')
-        self.menubar = tk.Menu(top,font="TkMenuFont",bg='#ed6754',fg=_fgcolor)
-        top.configure(menu = self.menubar)
+        self.menubar = tk.Menu(top, font="TkMenuFont", bg='#ed6754', fg=_fgcolor)
+        top.configure(menu=self.menubar)
 
     def popup1(self, event, *args, **kwargs):
         self.Popupmenu2 = tk.Menu(self.top, tearoff=0)
@@ -304,8 +347,10 @@ class Toplevel1:
         self.Popupmenu2.configure(font="TkMenuFont")
         self.Popupmenu2.post(event.x_root, event.y_root)
 
+
 def start_up():
     main()
+
 
 if __name__ == '__main__':
     main()
