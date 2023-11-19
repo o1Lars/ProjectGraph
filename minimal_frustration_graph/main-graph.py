@@ -106,6 +106,7 @@ class Toplevel1:
 
         for num in range(number_of_iterations):
             test_graph.update_ordered()
+            print(test_graph.total_frustration)
 
         test_graph.report_frustration_history(11)
 
