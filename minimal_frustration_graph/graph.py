@@ -174,16 +174,16 @@ class Graph:
         # add tests
         """
         # variabel for dictionary
-        vd = self.vertices_dict
+        dictionary = self.vertices_dict
 
         # iterate over vertices in vertices_dictionary
-        for vertex in vd:
+        for vertex in dictionary:
             # set local action for each vertex
-            local_action = vd[vertex]['frustration']
+            local_action = dictionary[vertex]['frustration']
             if local_action >= 0:
-                current_color = vd[vertex]['color']  # set current color
+                current_color = dictionary[vertex]['color']  # set current color
                 new_color = 1.0 if current_color != 1.0 else 1.0  # swap current color
-                vd[vertex]['color'] = new_color
+                dictionary[vertex]['color'] = new_color
             print("the colors of the sites have been swapped")
 
         # calculate new frustration for each vertex
@@ -205,16 +205,16 @@ class Graph:
         """
 
         # variabel for dictionary
-        vd = self.vertices_dict
+        dictionary = self.vertices_dict
 
         # store vertix with largest local action
         largest_action = None
         largest_vertex = None
 
         # iterate over dictionary
-        for vertex in vd:
+        for vertex in dictionary:
             # set current local action
-            current_action = vd[vertex]['frustration']
+            current_action = dictionary[vertex]['frustration']
 
             # check if local action of current vertex > largest
             if largest_action is None or current_action > largest_action:
@@ -222,10 +222,10 @@ class Graph:
                 largest_vertex = vertex  # track vertex with largest action value
 
         # swap the color of vertex with largest local action
-        if vd[largest_vertex]['color'] == 1.0:
-            vd[largest_vertex]['color'] = 0.0
+        if dictionary[largest_vertex]['color'] == 1.0:
+            dictionary[largest_vertex]['color'] = 0.0
         else:
-            vd[largest_vertex]['color'] = 1.0
+            dictionary[largest_vertex]['color'] = 1.0
 
         # calculate new frustration for each vertex
         self.update_vertex_frustration()
