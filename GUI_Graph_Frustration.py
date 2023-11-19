@@ -69,7 +69,7 @@ class Toplevel1:
 
         except ValueError:
             self.display_error_message("Please enter valid numerical values for number of sites and iterations.")
-       
+
         #Try except clause below for number of sites
         try:
             num_of_sites = int(num_of_sites)
@@ -93,6 +93,12 @@ class Toplevel1:
         #Error message for choosing both file path and checking random graph
         if self.Entry1.get() and random_is_checked:
             self.display_error_message('Please select either "Enter file directory" or "Generate random graph", not both.')
+        #Checks if file path is valid
+        if not random_is_checked:
+            file_path = self.Entry1.get()
+            if not os.path.isfile(file_path):
+                self.display_error_message("Invalid file path. Please enter a valid file path.")
+                return
 
     def display_error_message(self, message):
         error_popup = tk.Toplevel(self.top)
