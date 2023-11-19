@@ -99,18 +99,16 @@ class Toplevel1:
         else:  # get file from program
             file_from_path = self.Entry1.get()
             graph_edges_list = create_graph_from_file(r"" + file_from_path)
-        ## check that graph is connected
+        # check that graph is connected
 
-# =============================================================================
-# Just test code
-#         # check if graph is connected
-#         test_graph = g.Graph(graph_edges_list, color_pattern)
+        # check if graph is connected
+        test_graph = g.Graph(graph_edges_list, color_pattern)
 
-#         for num in range(number_of_iterations):
-#             test_graph.update_max_violation()
+        for num in range(number_of_iterations):
+            test_graph.update_ordered()
 
-#         test_graph.report_frustration_history(11)
-# =============================================================================
+        test_graph.report_frustration_history(11)
+
         # create new Graph class with vertices, edges, color and frustration
 
 
