@@ -124,7 +124,7 @@ class Toplevel1:
 #############################################################################################################
 ############## ALL CODE BELOW THIS POINT IS PURELY VISUAL, PLACEMENT, SHAPE, COLORS, ETC ####################
 #############################################################################################################
-    
+
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
