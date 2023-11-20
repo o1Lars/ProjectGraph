@@ -17,6 +17,7 @@ import matplotlib.pyplot as plt
 from typing import List, Optional, Dict
 import random as random
 
+
 class GraphSimulator:
     """Simulate update patterns on a graph and """
 
@@ -43,7 +44,6 @@ class GraphSimulator:
                 dictionary[vertex]['color'] = new_color
                 self.update_vertex_frustration()                    # update vertices frustration
             print("the colors of the sites have been swapped")
-
 
         # compute new total frustration and add to list
         self.total_frustration.append(self.global_metric(self.vertices_dict))
