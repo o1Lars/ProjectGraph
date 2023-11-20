@@ -17,32 +17,145 @@ import matplotlib.pyplot as plt
 from typing import List, Optional, Dict
 import random as random
 
-# Create class Graph
+class GraphSimulator:
+    """Simulate update patterns on a graph and """
+
+    def update_ordered(self) -> None:
+        """Visit each site of the graph and change (swap) the colour if the local action of the site is positive
+
+        Parameters
+        ----------
+        graph : list
+            DESCRIPTION. # TODO
+
+        # add tests
+        """
+        # variabel for dictionary
+        dictionary = self.vertices_dict
+
+        # iterate over vertices in vertices_dictionary
+        for vertex in dictionary:
+            # set local action for each vertex
+            local_action = dictionary[vertex]['frustration']
+            if local_action >= 0:
+                current_color = dictionary[vertex]['color']         # set current color
+                new_color = 1.0 if current_color != 1.0 else 1.0    # swap current color
+                dictionary[vertex]['color'] = new_color
+                self.update_vertex_frustration()                    # update vertices frustration
+            print("the colors of the sites have been swapped")
 
 
-class Graph:
+        # compute new total frustration and add to list
+        self.total_frustration.append(self.global_metric(self.vertices_dict))
+
+    def update_max_violation(self) -> None:
+        """
+        Identify the site with the largest value of local action and swap its colour.
+
+        Parameters
+        ----------
+        graph : list
+            DESCRIPTION. # TODO
+
+        # add tests
+        """
+
+        # variabel for dictionary
+        dictionary = self.vertices_dict
+
+        # store vertix with largest local action
+        largest_action = None
+        largest_vertex = None
+
+        # iterate over dictionary
+        for vertex in dictionary:
+            # set current local action
+            current_action = dictionary[vertex]['frustration']
+
+            # check if local action of current vertex > largest
+            if largest_action is None or current_action > largest_action:
+                largest_action = current_action  # set new largest action value
+                largest_vertex = vertex  # track vertex with largest action value
+
+        # swap the color of vertex with largest local action
+        if dictionary[largest_vertex]['color'] == 1.0:
+            dictionary[largest_vertex]['color'] = 0.0
+        else:
+            dictionary[largest_vertex]['color'] = 1.0
+
+        # calculate new frustration for each vertex
+        self.update_vertex_frustration()
+        print("the site with the largest value of the local action has had its colours swapped")
+
+        # compute new total frustration and add to list
+        self.total_frustration.append(self.global_metric(self.vertices_dict))
+
+    def update_monte_carlo(graph_dict: dict) -> dict:
+        """
+        Visit each site of the graph and change (swap) the colour if the exponential of the local action is greater
+        than a random number between 0 and 1
+
+        Parameters
+        ----------
+        graph : list
+            DESCRIPTION. # TODO
+
+        # add tests
+        """
+        # TOOD
+        print("the site with the largest value of the local action has had its colours swapped")
+
+    def report_frustration_history(self, steps: int) -> None:
+        """ Display plot of the evolution of total frustration over a specified number of steps
+
+        Parameters
+        ----------
+        frustration : int
+            DESCRIPTION.
+        steps : int
+            DESCRIPTION.
+        """
+        step_list = list(range(1, steps + 1))
+        frustration = self.total_frustration
+
+        fig, ax = plt.subplots()  # Create a figure containing a single axes.
+        ax.plot(step_list, frustration)  # Plot some data on the axes
+
+        # set labels
+        ax.set_ylabel("Frustration of the graph")
+        ax.set_xlabel("Number of update steps")
+
+        # Display
+        plt.show()
+
+
+class GraphCreater(GraphSimulator):
     """Each instance of this class creates a Graph with edges, vertices and a coloring pattern. Furthermore,
     each instance has methods for calculating local site frustration, global frustration and updating color patterns
     according to three different update methods: Ordered, MaxViolation and MonteCarlo
     """
 
-    def __init__(self,
-                 edges: list,
-                 color_pattern: int,
-                 vertices_dict: Optional[Dict] = {},
-                 total_frustration: Optional[List] = []) -> None:
+    def __init__(
+        self,
+        edges: list,
+        color_pattern: int,
+        vertices_dict: Optional[Dict]={},
+        total_frustration: Optional[List]=[]) -> None:
+        super().__init__
+
         """
         Parameters
         ----------
         edges: List[(int,int)]
-          List containing the edges (Tuples of 2 vertices) forming the 2D surface for the graph.
+            List containing the edges (Tuples of 2 vertices) forming the 2D surface for the graph.
         color_pattern:
-          Color of the vertices
+            Color of the vertices
         vertices_dict: Optional[dict], default = {}
-          dictionary with vertices as key and values for each vertex: color, frustration, neighbours
+            dictionary with vertices as key and values for each vertex: color, frustration, neighbours
         total_frustration: Optional[float], default = 0
-          The graphs total frustration over numbers of iterations/simulation
+            The graphs total frustration over numbers of iterations/simulation
         """
+
         self.edges = edges
         self.color_pattern = color_pattern
         self.vertices_dict = self.create_graph_dict(self.edges, self.color_pattern)
@@ -163,113 +276,6 @@ class Graph:
             self.vertices_dict[vertex]['frustration'] = frustration
             print(f"Frustration for vertex {vertex}: {frustration}")
 
-    def update_ordered(self) -> None:
-        """Visit each site of the graph and change (swap) the colour if the local action of the site is positive
-
-        Parameters
-        ----------
-        graph : list
-            DESCRIPTION. # TODO
-
-        # add tests
-        """
-        # variabel for dictionary
-        dictionary = self.vertices_dict
-
-        # iterate over vertices in vertices_dictionary
-        for vertex in dictionary:
-            # set local action for each vertex
-            local_action = dictionary[vertex]['frustration']
-            if local_action >= 0:
-                current_color = dictionary[vertex]['color']         # set current color
-                new_color = 1.0 if current_color != 1.0 else 1.0    # swap current color
-                dictionary[vertex]['color'] = new_color
-                self.update_vertex_frustration()                    # update vertices frustration
-            print("the colors of the sites have been swapped")
-
-
-        # compute new total frustration and add to list
-        self.total_frustration.append(self.global_metric(self.vertices_dict))
-
-    def update_max_violation(self) -> None:
-        """
-        Identify the site with the largest value of local action and swap its colour.
-
-        Parameters
-        ----------
-        graph : list
-            DESCRIPTION. # TODO
-
-        # add tests
-        """
-
-        # variabel for dictionary
-        dictionary = self.vertices_dict
-
-        # store vertix with largest local action
-        largest_action = None
-        largest_vertex = None
-
-        # iterate over dictionary
-        for vertex in dictionary:
-            # set current local action
-            current_action = dictionary[vertex]['frustration']
-
-            # check if local action of current vertex > largest
-            if largest_action is None or current_action > largest_action:
-                largest_action = current_action  # set new largest action value
-                largest_vertex = vertex  # track vertex with largest action value
-
-        # swap the color of vertex with largest local action
-        if dictionary[largest_vertex]['color'] == 1.0:
-            dictionary[largest_vertex]['color'] = 0.0
-        else:
-            dictionary[largest_vertex]['color'] = 1.0
-
-        # calculate new frustration for each vertex
-        self.update_vertex_frustration()
-        print("the site with the largest value of the local action has had its colours swapped")
-
-        # compute new total frustration and add to list
-        self.total_frustration.append(self.global_metric(self.vertices_dict))
-
-    def update_monte_carlo(graph_dict: dict) -> dict:
-        """
-        Visit each site of the graph and change (swap) the colour if the exponential of the local action is greater
-        than a random number between 0 and 1
-
-        Parameters
-        ----------
-        graph : list
-            DESCRIPTION. # TODO
-
-        # add tests
-        """
-        # TOOD
-        print("the site with the largest value of the local action has had its colours swapped")
-
-    def report_frustration_history(self, steps: int) -> None:
-        """ Display plot of the evolution of total frustration over a specified number of steps
-
-        Parameters
-        ----------
-        frustration : int
-            DESCRIPTION.
-        steps : int
-            DESCRIPTION.
-        """
-        step_list = list(range(1, steps + 1))
-        frustration = self.total_frustration
-
-        fig, ax = plt.subplots()  # Create a figure containing a single axes.
-        ax.plot(step_list, frustration)  # Plot some data on the axes
-
-        # set labels
-        ax.set_ylabel("Frustration of the graph")
-        ax.set_xlabel("Number of update steps")
-
-        # Display
-        plt.show()
 
 
 # Import doctest module
