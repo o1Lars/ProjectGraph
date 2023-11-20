@@ -41,17 +41,18 @@ class GraphSimulator:
 
         # add tests
         """
-        # variabel for dictionary
-        dictionary = self.vertices_dict
+        vertices_list = self.vertices_list
+        vertices_frustration = self.vertices_frustration
+        val_map = self.val_map
 
         # iterate over vertices in vertices_dictionary
-        for vertex in dictionary:
+        for vertex in vertices_list:
             # set local action for each vertex
-            local_action = dictionary[vertex]['frustration']
-            if local_action >= 0:
-                current_color = dictionary[vertex]['color']         # set current color
-                new_color = 1.0 if current_color != 1.0 else 1.0    # swap current color
-                dictionary[vertex]['color'] = new_color
+            local_action = vertices_frustration[vertex]
+            if local_action > 0:
+                current_color = val_map[vertex]                     # set current color
+                new_color = 1.0 if current_color != 1.0 else 0.0    # swap current color
+                val_map[vertex] = new_color
                 self.update_vertex_frustration()                    # update vertices frustration
             print("the colors of the sites have been swapped")
 
@@ -67,17 +68,18 @@ class GraphSimulator:
         # add tests
         """
 
-        # variabel for dictionary
-        dictionary = self.vertices_dict
+        vertices_list = self.vertices_list
+        vertices_frustration = self.vertices_frustration
+        val_map = self.val_map
 
         # store vertix with largest local action
         largest_action = None
         largest_vertex = None
 
         # iterate over dictionary
-        for vertex in dictionary:
+        for vertex in vertices_list:
             # set current local action
-            current_action = dictionary[vertex]['frustration']
+            current_action = vertices_frustration[vertex]
 
             # check if local action of current vertex > largest
             if largest_action is None or current_action > largest_action:
@@ -85,10 +87,10 @@ class GraphSimulator:
                 largest_vertex = vertex                                     # track vertex with largest action value
 
         # swap the color of vertex with largest local action
-        if dictionary[largest_vertex]['color'] == 1.0:
-            dictionary[largest_vertex]['color'] = 0.0
+        if val_map[largest_vertex] == 1.0:
+            val_map[largest_vertex] = 0.0
         else:
-            dictionary[largest_vertex]['color'] = 1.0
+            val_map[largest_vertex] = 1.0
 
         # calculate new frustration for each vertex
         self.update_vertex_frustration()
@@ -122,7 +124,7 @@ class GraphSimulator:
 
 
             # compute new global metric and add to total_frustration
-            self.total_frustration.append(self.global_metric(self.vertices_dict))
+            self.total_frustration.append(self.global_metric())
 
         print(self.total_frustration)
 
@@ -194,7 +196,7 @@ class GraphCreater(GraphSimulator):
         # calculate initial vertex frustration / local metric
         self.update_vertex_frustration()
         # calculate initial total frustration at instance construction
-        self.total_frustration.append(self.global_metric(self.vertices_frustration))
+        self.total_frustration.append(self.global_metric())
 
     # class methods
 
@@ -282,10 +284,7 @@ class GraphCreater(GraphSimulator):
             total_frustration += (1 - 2 * c_i) * (1 - 2 * c_j)
         return total_frustration
 
-
-    # global metric function
-
-    def global_metric(self, vertex_frustration: dict) -> float:
+    def global_metric(self) -> float:
         """
         Return the sum of the local_metric over every single vertex of the graph.
         The global metric is the measure of the frustration of the graph simulated by the program.
@@ -296,14 +295,15 @@ class GraphCreater(GraphSimulator):
         Parameters
         ----------
         """
+        vertices_frustration = self.vertices_frustration
 
         # Store total frustration
         total_frustration = 0.0
 
         # iterate over dictionary of vertices
-        for vertex in vertex_frustration:
+        for vertex in vertices_frustration:
             # add all vertex frustrations to total
-            total_frustration += vertex_frustration[vertex]
+            total_frustration += vertices_frustration[vertex]
 
         # Multiply total_frustration by 1/2 as per the provided formula.
         total_frustration *= 0.5
