@@ -100,7 +100,7 @@ class Toplevel1:
             graph_edges_list = create_graph_from_file(r"" + file_from_path)
 
         # Create graph
-        sim_graph = g.Graph(graph_edges_list, color_pattern)
+        sim_graph = g.GraphCreater(graph_edges_list, color_pattern)
 
         # Check that graph is connected
         try:
