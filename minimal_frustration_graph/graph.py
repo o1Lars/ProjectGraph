@@ -74,8 +74,8 @@ class GraphSimulator:
 
             # check if local action of current vertex > largest
             if largest_action is None or current_action > largest_action:
-                largest_action = current_action  # set new largest action value
-                largest_vertex = vertex  # track vertex with largest action value
+                largest_action = current_action                             # set new largest action value
+                largest_vertex = vertex                                     # track vertex with largest action value
 
         # swap the color of vertex with largest local action
         if dictionary[largest_vertex]['color'] == 1.0:
@@ -88,7 +88,7 @@ class GraphSimulator:
         print("the site with the largest value of the local action has had its colours swapped")
 
         # compute new total frustration and add to list
-        self.total_frustration.append(self.global_metric(self.vertices_dict))
+        self.total_frustration.append(self.global_metric(dictionary))
 
     def update_monte_carlo(graph_dict: dict) -> dict:
         """
@@ -104,6 +104,19 @@ class GraphSimulator:
         """
         # TOOD
         print("the site with the largest value of the local action has had its colours swapped")
+
+    def run_simulation(self, update_procedure, iterations):
+        """Simulate update of graph accourding to update_procedure for number of iterations"""
+
+        if update_procedure.lower() == "ordered":
+            print("running Ordered update procedure")
+        elif update_procedure.lower() == "maxviolation":
+            print("running MaxViolation update procedure")
+        else:
+            print("running MonteCarlo update procedure")
+
+        print(f"Graph simulated the {update_procedure} for {iterations} number of iterations")
+
 
     def report_frustration_history(self, steps: int) -> None:
         """ Display plot of the evolution of total frustration over a specified number of steps
@@ -154,12 +167,15 @@ class GraphCreater(GraphSimulator):
             dictionary with vertices as key and values for each vertex: color, frustration, neighbours
         total_frustration: Optional[float], default = 0
             The graphs total frustration over numbers of iterations/simulation
+        is_connected: Optional[Boolean], default = False
+            Is true if all graph vertices has at least one neighbour
         """
 
         self.edges = edges
         self.color_pattern = color_pattern
         self.vertices_dict = self.create_graph_dict(self.edges, self.color_pattern)
         self.total_frustration = []
+        self.is_connected = False
 
         # calculate and add initial site frustration to vertices_dict
         self.update_vertex_frustration()
@@ -275,6 +291,12 @@ class GraphCreater(GraphSimulator):
             frustration = self.local_metric(c_i, n_J)
             self.vertices_dict[vertex]['frustration'] = frustration
             print(f"Frustration for vertex {vertex}: {frustration}")
+
+    def update_graph_connection():
+        """Return True if graph is connected (all vertices have atleast one neighbour, otherwise return False"""
+
+        # TODO
+        print("Graph is connected")
 
 
 
