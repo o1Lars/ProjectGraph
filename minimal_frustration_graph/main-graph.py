@@ -108,16 +108,16 @@ class Toplevel1:
             print("graph is connected")
         except Exception:
             print("graph is not connected")
-            
+
         # Run simulation
         sim_graph.run_simulation(update_procedure, number_of_iterations)    # TODO: add sim_graph to class
-        
+
         # display report of frustration
         sim_graph.report_frustration_history(abs(number_of_iterations))     # TODO: add sim_graph to class
-        
+
         # Run new graph or quit
 
-    
+
 
 #############################################################################################################
 ############## ALL CODE BELOW THIS POINT IS PURELY VISUAL, PLACEMENT, SHAPE, COLORS, ETC ####################
