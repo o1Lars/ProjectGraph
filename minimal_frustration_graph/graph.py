@@ -184,7 +184,7 @@ class GraphCreater(GraphSimulator):
 
         self.edges = edges
         self.color_pattern = color_pattern
-        self.vertices_dict = self.create_graph_dict(self.edges, self.color_pattern)
+        self.vertices_list = self.create_vertices_list(self.edges)
         self.total_frustration = []
         self.is_connected = False
 
@@ -196,11 +196,12 @@ class GraphCreater(GraphSimulator):
 
     # class methods
 
-    def create_graph_dict(self, edges: list[tuple], color_pattern: int) -> dict:
-        """Creates a dictionary of vertices from edges and a color pattern.
-        """
-        # Create dict and vertices
-        graph_dict = {}
+    def create_vertices_list(self) -> list:
+        """Return a list of vertices from tuple of edges"""
+
+        edges = self.edges
+
+        # Create vertices list
         graph_vertices = []
 
         # Iterate over edges_list and append vertex
@@ -212,23 +213,34 @@ class GraphCreater(GraphSimulator):
             if y not in graph_vertices:
                 graph_vertices.append(y)
 
-        # Add vertex to graph_dict
-        for vertex in graph_vertices:
-            graph_dict[vertex] = {}
+    def create_val_map(self) -> dict:
+        """Return dictionary with color mapped to vertex"""
+
+        color_pattern = self.color_pattern
+        color_dict = {}
+        vertices = self.vertices_list
 
         # Add color pattern to vertex
-        for vertex in graph_dict:
+        for vertex in vertices:
             # add color pattern to vertex
             if color_pattern == 0 or color_pattern == 1:
-                graph_dict[vertex]["color"] = color_pattern
+                color_dict[vertex]["color"] = color_pattern
             else:  # if color pattern not 0 or 1, randomly assign color value
                 random.seed(10)
                 color = random.randint(0, 1)
-                graph_dict[vertex]["color"] = color
+                color_dict[vertex]["color"] = color
+
+    def neighbour_dict(self):
+        """Return dictionary of vertices as key and neighbours (if any) as value"""
+
+        vertices_list = self.vertices_list
+        edges = self.edges
+
+        new_dict = {}
 
         # add neighbours to dictionary
         # Iterate over dictionary
-        for vertex in graph_dict:
+        for vertex in vertices_list:
             # Store list of neighbours
             neighbours_list = []
 
@@ -243,9 +255,9 @@ class GraphCreater(GraphSimulator):
                     neighbours_list.append(y)
 
                 # add neighbour list to dictionary
-                graph_dict[vertex]['neighbours'] = neighbours_list
+                new_dict[vertex]['neighbours'] = neighbours_list
 
-        return graph_dict
+        return new_dict
 
     def local_metric(self, c_i: int, n_j: int) -> float:
         """
