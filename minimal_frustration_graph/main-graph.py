@@ -89,6 +89,7 @@ class Toplevel1:
         # get number of iterations
         number_of_iterations = int(self.Entry3.get())
 
+
         # Store graph edges in list of tuples
         graph_edges_list = []
 
@@ -102,12 +103,21 @@ class Toplevel1:
         # Create graph
         sim_graph = g.GraphCreater(graph_edges_list, color_pattern)
 
+
         # Check that graph is connected
         try:
             sim_graph.is_connected                                          # TODO: Add attribute and method to graph
             print("graph is connected")
         except Exception:
             print("graph is not connected")
+
+        # Store initial vertex coloring
+        vertex_colors = {}
+        for vertex in sim_graph.vertices_dict:
+            vertex_colors[vertex] = sim_graph.vertices_dict[vertex]['color']
+
+        # Display graph
+        vis_graph = vrg.Visualiser(sim_graph.edges, val_map=vertex_colors)
 
         # Run simulation
         sim_graph.run_simulation(update_procedure, number_of_iterations)    # TODO: add sim_graph to class

@@ -11,8 +11,18 @@ Notes
 -----
 Module is created as part of the group project for the final exam of DS830 Introduction to programming.
 """
+import os
+import sys
 
-from __future__ import annotations  # to use a class in type hints of its members
+# Get the directory of the current script
+script_path = sys.argv[0] if hasattr(sys, 'frozen') else __file__
+current_dir = os.path.dirname(os.path.abspath(script_path))
+
+# Append the parent directory to sys.path to enable relative imports
+sys.path.append(os.path.dirname(current_dir))
+
+# Import dependencies
+from minimal_frustration_graph import visualiser_rndgraph as vrg
 import matplotlib.pyplot as plt
 from typing import List, Optional, Dict
 import random as random
@@ -44,9 +54,6 @@ class GraphSimulator:
                 dictionary[vertex]['color'] = new_color
                 self.update_vertex_frustration()                    # update vertices frustration
             print("the colors of the sites have been swapped")
-
-        # compute new total frustration and add to list
-        self.total_frustration.append(self.global_metric(self.vertices_dict))
 
     def update_max_violation(self) -> None:
         """
@@ -87,9 +94,6 @@ class GraphSimulator:
         self.update_vertex_frustration()
         print("the site with the largest value of the local action has had its colours swapped")
 
-        # compute new total frustration and add to list
-        self.total_frustration.append(self.global_metric(dictionary))
-
     def update_monte_carlo(graph_dict: dict) -> dict:
         """
         Visit each site of the graph and change (swap) the colour if the exponential of the local action is greater
@@ -108,12 +112,19 @@ class GraphSimulator:
     def run_simulation(self, update_procedure, iterations):
         """Simulate update of graph accourding to update_procedure for number of iterations"""
 
-        if update_procedure.lower() == "ordered":
-            print("running Ordered update procedure")
-        elif update_procedure.lower() == "maxviolation":
-            print("running MaxViolation update procedure")
-        else:
-            print("running MonteCarlo update procedure")
+        for iteration in range(iterations):
+            if update_procedure.lower() == "ordered":
+                self.update_ordered()
+            elif update_procedure.lower() == "maxviolation":
+                self.update_max_violation()
+            else:
+                self.update_monte_carlo()
+
+            
+            # compute new global metric and add to total_frustration
+            self.total_frustration.append(self.global_metric(self.vertices_dict))
+
+        print(self.total_frustration)
 
         print(f"Graph simulated the {update_procedure} for {iterations} number of iterations")
 
@@ -128,7 +139,7 @@ class GraphSimulator:
         steps : int
             DESCRIPTION.
         """
-        step_list = list(range(1, steps + 1))
+        step_list = list(range(0, steps + 1))
         frustration = self.total_frustration
 
         fig, ax = plt.subplots()  # Create a figure containing a single axes.
