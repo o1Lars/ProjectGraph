@@ -187,12 +187,14 @@ class GraphCreater(GraphSimulator):
         self.vertices_list = self.create_vertices_list()
         self.val_map = self.create_val_map()
         self.vertices_neighbours = self.create_neighbour_dict()
-        self.vertices_frustration = self.update_vertex_frustration()
+        self.vertices_frustration = {}
         self.total_frustration = []
         self.is_connected = False
 
+        # calculate initial vertex frustration / local metric
+        self.update_vertex_frustration()
         # calculate initial total frustration at instance construction
-        self.total_frustration.append(self.global_metric(self.vertices_dict))
+        self.total_frustration.append(self.global_metric(self.vertices_frustration))
 
     # class methods
 
@@ -275,15 +277,15 @@ class GraphCreater(GraphSimulator):
 
         # Store local metric total
         total_frustration = 0.0
+
         for c_j in n_j:
             total_frustration += (1 - 2 * c_i) * (1 - 2 * c_j)
         return total_frustration
-        # TODO -> Add so this function properly adds the total to list for storing the values through the iteration
-        # Possibly not part of function but added when calling the function
+
 
     # global metric function
 
-    def global_metric(self, vertices: dict) -> float:
+    def global_metric(self, vertex_frustration: dict) -> float:
         """
         Return the sum of the local_metric over every single vertex of the graph.
         The global metric is the measure of the frustration of the graph simulated by the program.
@@ -299,9 +301,9 @@ class GraphCreater(GraphSimulator):
         total_frustration = 0.0
 
         # iterate over dictionary of vertices
-        for vertex in vertices:
+        for vertex in vertex_frustration:
             # add all vertex frustrations to total
-            total_frustration += vertices[vertex]['frustration']
+            total_frustration += vertex_frustration[vertex]
 
         # Multiply total_frustration by 1/2 as per the provided formula.
         total_frustration *= 0.5
@@ -313,13 +315,14 @@ class GraphCreater(GraphSimulator):
         """
 
         vertices_list = self.vertices_list
-        color_pattern = self.color_pattern
+        vertices_neighbours = self.vertices_neighbours
+        vertices_color = self.val_map
 
         for vertex in vertices_list:
-            c_i = self.vertices_dict[vertex]['color']
-            n_J = [self.vertices_dict[neighbour]['color'] for neighbour in self.vertices_dict[vertex]['neighbours']]
+            c_i = vertices_color[vertex]
+            n_J = [vertices_color[neighbour] for neighbour in vertices_neighbours[vertex]]
             frustration = self.local_metric(c_i, n_J)
-            self.vertices_dict[vertex]['frustration'] = frustration
+            self.vertices_frustration[vertex] = frustration
             print(f"Frustration for vertex {vertex}: {frustration}")
 
     def update_graph_connection():
@@ -327,6 +330,15 @@ class GraphCreater(GraphSimulator):
 
         # TODO
         print("Graph is connected")
+
+    def info(self):
+        """Display relevant graph info"""
+
+        print("vertices: ", self.vertices_list)
+        print("vertex colors: ", self.val_map)
+        print("vertex neighbours: ", self.vertices_neighbours)
+        print("vertex frustration: ", self.vertices_frustration)
+        print("total graph frustration: ", self.total_frustration)
 
 
 
