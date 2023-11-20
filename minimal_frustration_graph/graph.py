@@ -165,8 +165,8 @@ class GraphCreater(GraphSimulator):
         self,
         edges: list,
         color_pattern: int,
-        vertices_dict: Optional[Dict]={},
-        total_frustration: Optional[List]=[]) -> None:
+        vertices_dict: Optional[Dict] = {},
+        total_frustration: Optional[List] = []) -> None:
         super().__init__
 
         """
