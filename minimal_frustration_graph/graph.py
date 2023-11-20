@@ -120,7 +120,7 @@ class GraphSimulator:
             else:
                 self.update_monte_carlo()
 
-            
+
             # compute new global metric and add to total_frustration
             self.total_frustration.append(self.global_metric(self.vertices_dict))
 
@@ -184,12 +184,12 @@ class GraphCreater(GraphSimulator):
 
         self.edges = edges
         self.color_pattern = color_pattern
-        self.vertices_list = self.create_vertices_list(self.edges)
+        self.vertices_list = self.create_vertices_list()
+        self.val_map = self.create_val_map()
+        self.vertices_neighbours = self.create_neighbour_dict()
+        self.vertices_frustration = self.update_vertex_frustration()
         self.total_frustration = []
         self.is_connected = False
-
-        # calculate and add initial site frustration to vertices_dict
-        self.update_vertex_frustration()
 
         # calculate initial total frustration at instance construction
         self.total_frustration.append(self.global_metric(self.vertices_dict))
@@ -213,30 +213,33 @@ class GraphCreater(GraphSimulator):
             if y not in graph_vertices:
                 graph_vertices.append(y)
 
+        return graph_vertices
+
     def create_val_map(self) -> dict:
         """Return dictionary with color mapped to vertex"""
 
         color_pattern = self.color_pattern
         color_dict = {}
-        vertices = self.vertices_list
+        vertices_list = self.vertices_list
 
         # Add color pattern to vertex
-        for vertex in vertices:
+        for vertex in vertices_list:
             # add color pattern to vertex
             if color_pattern == 0 or color_pattern == 1:
-                color_dict[vertex]["color"] = color_pattern
+                color_dict[vertex] = color_pattern
             else:  # if color pattern not 0 or 1, randomly assign color value
                 random.seed(10)
                 color = random.randint(0, 1)
-                color_dict[vertex]["color"] = color
+                color_dict[vertex] = color
 
-    def neighbour_dict(self):
+        return color_dict
+
+    def create_neighbour_dict(self):
         """Return dictionary of vertices as key and neighbours (if any) as value"""
 
         vertices_list = self.vertices_list
         edges = self.edges
-
-        new_dict = {}
+        vertices_neighbours = {}
 
         # add neighbours to dictionary
         # Iterate over dictionary
@@ -255,9 +258,9 @@ class GraphCreater(GraphSimulator):
                     neighbours_list.append(y)
 
                 # add neighbour list to dictionary
-                new_dict[vertex]['neighbours'] = neighbours_list
+                vertices_neighbours[vertex] = neighbours_list
 
-        return new_dict
+        return vertices_neighbours
 
     def local_metric(self, c_i: int, n_j: int) -> float:
         """
@@ -308,7 +311,11 @@ class GraphCreater(GraphSimulator):
     def update_vertex_frustration(self):
         """Updates frustration for each vertex
         """
-        for vertex in self.vertices_dict:
+
+        vertices_list = self.vertices_list
+        color_pattern = self.color_pattern
+
+        for vertex in vertices_list:
             c_i = self.vertices_dict[vertex]['color']
             n_J = [self.vertices_dict[neighbour]['color'] for neighbour in self.vertices_dict[vertex]['neighbours']]
             frustration = self.local_metric(c_i, n_J)
