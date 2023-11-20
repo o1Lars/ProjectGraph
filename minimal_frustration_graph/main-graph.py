@@ -99,27 +99,18 @@ class Toplevel1:
         else:  # get file from program
             file_from_path = self.Entry1.get()
             graph_edges_list = create_graph_from_file(r"" + file_from_path)
-        # check that graph is connected
-
-        test_graph = g.Graph(graph_edges_list, color_pattern)
-
-        for num in range(number_of_iterations):
-            test_graph.update_ordered()
-            print(test_graph.total_frustration)
-
-        test_graph.report_frustration_history(11)
-
-        # create new Graph class with vertices, edges, color and frustration
-
-
-        # create instance of graph
-        # graph_instance = vrg.Visualiser(graph_edges_list, val_map=colors_dict)
-
-        # simulate update procedure
-        print("update_procedure is:", update_procedure)
-        print("color pattern is", color_pattern)
         
-        print(graph_edges_list)
+        
+        # Create graph
+        test_graph = g.Graph(graph_edges_list, color_pattern)
+        
+        # Check that graph is connected
+        
+        # Run simulation
+
+        # display report of frustration
+        test_graph.report_frustration_history(abs(number_of_iterations))
+
     
 
 #############################################################################################################
