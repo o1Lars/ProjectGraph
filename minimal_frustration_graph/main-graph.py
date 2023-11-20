@@ -104,16 +104,16 @@ class Toplevel1:
 
         # Check that graph is connected
         try:
-            sim_graph.is_connected          # TODO: Add attribute and method to graph class
+            sim_graph.is_connected                                          # TODO: Add attribute and method to graph
             print("graph is connected")
         except Exception:
             print("graph is not connected")
             
         # Run simulation
-        sim_graph.run_simulation(update_procedure, number_of_iterations)
+        sim_graph.run_simulation(update_procedure, number_of_iterations)    # TODO: add sim_graph to class
         
         # display report of frustration
-        sim_graph.report_frustration_history(abs(number_of_iterations))
+        sim_graph.report_frustration_history(abs(number_of_iterations))     # TODO: add sim_graph to class
         
         # Run new graph or quit
 
