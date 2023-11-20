@@ -89,7 +89,6 @@ class Toplevel1:
         # get number of iterations
         number_of_iterations = int(self.Entry3.get())
 
-
         # Store graph edges in list of tuples
         graph_edges_list = []
 
@@ -99,15 +98,19 @@ class Toplevel1:
         else:  # get file from program
             file_from_path = self.Entry1.get()
             graph_edges_list = create_graph_from_file(r"" + file_from_path)
-        
-        
-        # Create graph
-        test_graph = g.Graph(graph_edges_list, color_pattern)
-        
-        # Check that graph is connected
-        
-        # Run simulation
 
+        # Create graph
+        sim_graph = g.Graph(graph_edges_list, color_pattern)
+
+        # Check that graph is connected
+        try:
+            sim_graph.is_connected          # TODO: Add attribute and method to graph class
+            print("graph is connected")
+        except Exception:
+            print("graph is not connected")
+            
+        # Run simulation
+        run_simulation(sim_graph, update_procedure, number_of_iterations)
         # display report of frustration
         test_graph.report_frustration_history(abs(number_of_iterations))
 
