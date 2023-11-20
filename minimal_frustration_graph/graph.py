@@ -121,6 +121,7 @@ class GraphSimulator:
                 self.update_max_violation()
             else:
                 self.update_monte_carlo()
+            self.vis_graph.update(val_map=self.val_map)
 
 
             # compute new global metric and add to total_frustration
@@ -192,6 +193,7 @@ class GraphCreater(GraphSimulator):
         self.vertices_frustration = {}
         self.total_frustration = []
         self.is_connected = False
+        self.vis_graph = vrg.Visualiser(self.edges, val_map=self.val_map)
 
         # calculate initial vertex frustration / local metric
         self.update_vertex_frustration()
