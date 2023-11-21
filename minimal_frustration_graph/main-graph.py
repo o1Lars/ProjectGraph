@@ -69,8 +69,8 @@ _bgmode = 'light'
 #############################################################################################################
 
 class Toplevel1:
-    #Below is all button functions
-    #This button function browses file dialog and posts the filepath into entry1
+    # Below is all button functions
+    # This button function browses file dialog and posts the filepath into entry1
     def browse_file(self):
         file_path = filedialog.askopenfilename()
         if file_path:
@@ -78,16 +78,65 @@ class Toplevel1:
             self.Entry1.insert(0, file_path)
 
     def generate_graph(self):
-        # random check button
-        random_is_checked = self.che51.get()
-        # get number of sites when random checked
-        num_of_sites = self.Entry2.get()
-        # get color pattern
-        color_pattern = self.Spinbox1.get()
-        # get update procedure
-        update_procedure = self.Spinbox2.get()
-        # get number of iterations
-        number_of_iterations = int(self.Entry3.get())
+        try:
+            # random check button
+            random_is_checked = self.che51.get()
+
+            # get number of sites when random checked
+            num_of_sites = int(self.Entry2.get()) if self.Entry2.get() else 0
+
+            # get color pattern
+            color_pattern = str(self.Spinbox1.get())
+
+            # get update procedure
+            update_procedure = str(self.Spinbox2.get())
+
+            # get number of iterations
+            number_of_iterations = int(self.Entry3.get()) if self.Entry3.get() else 0
+
+            print(random_is_checked, num_of_sites, color_pattern, update_procedure, number_of_iterations)
+
+        except ValueError:
+            self.display_error_message("Please enter valid numerical values for number of sites and iterations.")
+
+        #Try except clause below for number of sites
+        try:
+            num_of_sites = int(num_of_sites)
+            if num_of_sites > 50 or num_of_sites < 0:
+                raise ValueError("Number of sites cannot be negative or exceed 50.")
+        except ValueError as e:
+            # Display error message
+            error_message = f"Error: {e}"
+            self.display_error_message(error_message)
+            return
+        #try except clause below for number of iterations
+        try:
+            number_of_iterations = int(number_of_iterations)
+            if number_of_iterations < 0:
+                raise ValueError("Number of iterations cannot be negative.")
+        except ValueError as e:
+            # Display error message
+            error_message = f"Error: {e}"
+            self.display_error_message(error_message)
+            return
+        #Error message for choosing both file path and checking random graph
+        if self.Entry1.get() and random_is_checked:
+            self.display_error_message('Please select either "Enter file directory" or "Generate random graph", not both.')
+        #Checks if file path is valid
+        if not random_is_checked:
+            file_path = self.Entry1.get()
+            if not os.path.isfile(file_path):
+                self.display_error_message("Invalid file path. Please enter a valid file path.")
+                return
+
+    def display_error_message(self, message):
+        error_popup = tk.Toplevel(self.top)
+        error_popup.title("Error")
+        error_popup.geometry("400x100")
+        error_label = tk.Label(error_popup, text=message, font="-family {Segoe UI} -size 12", fg="red")
+        error_label.pack(pady=20)
+        ok_button = tk.Button(error_popup, text="OK", command=error_popup.destroy)
+        ok_button.pack()
 
 
         # Store graph edges in list of tuples
