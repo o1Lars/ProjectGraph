@@ -94,8 +94,6 @@ class Toplevel1:
             # get number of iterations
             number_of_iterations = int(self.Entry3.get()) if self.Entry3.get() else 0
 
-            print(random_is_checked, num_of_sites, color_pattern, update_procedure, number_of_iterations)
-
         except ValueError:
             self.display_error_message("Please enter valid numerical values for number of sites and iterations.")
 
