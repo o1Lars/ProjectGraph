@@ -1,6 +1,5 @@
 import random
 import math
-import roughwork2
 
 def monte_carlo(self) -> None:
     """Visit each site of the graph and swap colour if the exponential of the local action > a random float between 0,1.
