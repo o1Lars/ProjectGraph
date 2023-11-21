@@ -23,4 +23,10 @@ def monte_carlo(self) -> None:
             random_number = random.uniform(0, 1)  # generate random float between 0 and 1
             exp_local_action = math.exp(local_action)
 
+            if exp_local_action > random_number: #compare exponent to random number
+                new_color = 1.0 if current_color != 1.0 else 0.0 # swap current colour
+                val_map[vertex] = new_color
+                self.update_vertex_frustration()  # update vertices frustration
+                print("The colours of the sites have been swapped.")
+
 
