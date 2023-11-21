@@ -26,6 +26,7 @@ from minimal_frustration_graph import visualiser_rndgraph as vrg
 import matplotlib.pyplot as plt
 from typing import List, Optional, Dict
 import random as random
+import math as math
 
 
 class GraphSimulator:
@@ -96,11 +97,8 @@ class GraphSimulator:
         self.update_vertex_frustration()
         print("the site with the largest value of the local action has had its colours swapped")
 
-    def update_monte_carlo(graph_dict: dict) -> dict:
-        """
-        Visit each site of the graph and change (swap) the colour if the exponential of the local action is greater
-        than a random number between 0 and 1
-
+    def update_monte_carlo(self) -> None:
+        """Visit each site of the graph and swap colour if the exponential of the local action > a random float between 0,1.
         Parameters
         ----------
         graph : list
@@ -108,8 +106,24 @@ class GraphSimulator:
 
         # add tests
         """
-        # TOOD
-        print("the site with the largest value of the local action has had its colours swapped")
+        vertices_list = self.vertices_list
+        vertices_frustration = self.vertices_frustration
+        val_map = self.val_map
+
+        # iterate over vertices in vertices_dictionary
+        for vertex in vertices_list:
+            # set local action for each vertex
+            local_action = vertices_frustration[vertex]
+            if local_action > 0:
+                current_color = val_map[vertex]  # set current color
+                random_number = random.uniform(0, 1)  # generate random float between 0 and 1
+                exp_local_action = math.exp(local_action)
+
+                if exp_local_action > random_number: #compare exponent to random number
+                    new_color = 1.0 if current_color != 1.0 else 0.0 # swap current colour
+                    val_map[vertex] = new_color
+                    self.update_vertex_frustration()  # update vertices frustration
+                    print("The colours of the sites have been swapped.")
 
     def run_simulation(self, update_procedure, iterations):
         """Simulate update of graph accourding to update_procedure for number of iterations"""
