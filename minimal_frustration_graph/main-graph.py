@@ -93,7 +93,8 @@ class Toplevel1:
 
             # get number of iterations
             number_of_iterations = int(self.Entry3.get()) if self.Entry3.get() else 0
-
+        
+        
         except ValueError:
             self.display_error_message("Please enter valid numerical values for number of sites and iterations.")
 
@@ -127,16 +128,6 @@ class Toplevel1:
                 self.display_error_message("Invalid file path. Please enter a valid file path.")
                 return
 
-    def display_error_message(self, message):
-        error_popup = tk.Toplevel(self.top)
-        error_popup.title("Error")
-        error_popup.geometry("400x100")
-        error_label = tk.Label(error_popup, text=message, font="-family {Segoe UI} -size 12", fg="red")
-        error_label.pack(pady=20)
-        ok_button = tk.Button(error_popup, text="OK", command=error_popup.destroy)
-        ok_button.pack()
-
-
         # Store graph edges in list of tuples
         graph_edges_list = []
 
@@ -164,7 +155,19 @@ class Toplevel1:
         # display report of frustration
         sim_graph.report_frustration_history(abs(number_of_iterations))     # TODO: add sim_graph to class
 
-        # Run new graph or quit
+            # Run new graph or quit
+
+    def display_error_message(self, message):
+        error_popup = tk.Toplevel(self.top)
+        error_popup.title("Error")
+        error_popup.geometry("400x100")
+        error_label = tk.Label(error_popup, text=message, font="-family {Segoe UI} -size 12", fg="red")
+        error_label.pack(pady=20)
+        ok_button = tk.Button(error_popup, text="OK", command=error_popup.destroy)
+        ok_button.pack()
+
+
+
 
 
 
