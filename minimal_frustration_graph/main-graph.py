@@ -298,7 +298,7 @@ class Toplevel1:
         self.Label7.configure(highlightbackground="#d9d9d9")
         self.Label7.configure(highlightcolor="black")
         self.Label7.configure(text='''Choose update procedure:''')
-        self.Spinbox1 = tk.Spinbox(self.Frame1, from_=1.0, to=100.0)
+        self.Spinbox1 = tk.Spinbox(self.Frame1, from_=1.0, to=100.0, state="readonly")
         self.Spinbox1.place(relx=0.445, rely=0.34, relheight=0.045
                 , relwidth=0.192)
         self.Spinbox1.configure(activebackground="#f9f9f9")
@@ -375,7 +375,7 @@ class Toplevel1:
         self.Entry3.configure(insertbackground="black")
         self.Entry3.configure(selectbackground="#c4c4c4")
         self.Entry3.configure(selectforeground="black")
-        self.Spinbox2 = tk.Spinbox(self.Frame1, from_=1.0, to=100.0)
+        self.Spinbox2 = tk.Spinbox(self.Frame1, from_=1.0, to=100.0, state="readonly")
         self.Spinbox2.place(relx=0.445, rely=0.416, relheight=0.036
                 , relwidth=0.234)
         self.Spinbox2.configure(activebackground="#f9f9f9")
