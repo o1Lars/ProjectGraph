@@ -142,11 +142,11 @@ class Toplevel1:
 
 
         # Check that graph is connected
-        try:
-            sim_graph.is_connected                                          # TODO: Add attribute and method to graph
-            print("graph is connected")
-        except Exception:
-            print("graph is not connected")
+        if sim_graph.update_graph_connection() == True:
+            sim_graph.update_graph_connection()
+        else:
+            self.display_error_message("Graph not connected. Try again.")
+            return
 
         # Run simulation
         sim_graph.run_simulation(update_procedure, number_of_iterations)    # TODO: add sim_graph to class
