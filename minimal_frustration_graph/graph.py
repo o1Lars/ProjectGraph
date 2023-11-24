@@ -341,11 +341,29 @@ class GraphCreater(GraphSimulator):
             self.vertices_frustration[vertex] = frustration
             print(f"Frustration for vertex {vertex}: {frustration}")
 
-    def update_graph_connection():
-        """Return True if graph is connected (all vertices have atleast one neighbour, otherwise return False"""
+    def update_graph_connection(self):
+        # Return True if graph is connected, otherwise return False
+        visited = set()
+        self.is_connected = False
 
-        # TODO
-        print("Graph is connected")
+        for start_vertex in self.vertices_list:
+            if start_vertex not in visited:
+                stack = [start_vertex]
+
+                while stack:
+                    vertex = stack.pop()
+                    if vertex not in visited:
+                        visited.add(vertex)
+                        stack.extend(
+                            neighbour for neighbour in self.vertices_neighbours[vertex] if neighbour not in visited)
+
+                # If all vertices are visited, the graph is connected
+                self.is_connected = (len(visited) == len(self.vertices_list))
+                if self.is_connected:
+                    return True
+                else:
+                    return False
+                    break # Finish the loop if an unconnected section has been found
 
     def info(self):
         """Display relevant graph info"""
