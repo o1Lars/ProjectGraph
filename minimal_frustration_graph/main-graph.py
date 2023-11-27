@@ -140,7 +140,6 @@ class Toplevel1:
         # Create graph
         sim_graph = g.GraphCreater(graph_edges_list, color_pattern)
 
-
         # Check that graph is connected
         if sim_graph.update_graph_connection() == True:
             sim_graph.update_graph_connection()

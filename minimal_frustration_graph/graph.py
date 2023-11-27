@@ -33,15 +33,7 @@ class GraphSimulator:
     """Simulate update patterns on a graph"""
 
     def update_ordered(self) -> None:
-        """Visit each site of the graph and change (swap) the colour if the local action of the site is positive
-
-        Parameters
-        ----------
-        graph : list
-            DESCRIPTION. # TODO
-
-        # add tests
-        """
+        """Visit each site of the graph and change (swap) the colour if the local action of the site is positive"""
         vertices_list = self.vertices_list
         vertices_frustration = self.vertices_frustration
         val_map = self.val_map
