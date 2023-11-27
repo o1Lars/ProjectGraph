@@ -30,7 +30,7 @@ import math as math
 
 
 class GraphSimulator:
-    """Simulate update patterns on a graph and """
+    """Simulate update patterns on a graph"""
 
     def update_ordered(self) -> None:
         """Visit each site of the graph and change (swap) the colour if the local action of the site is positive
