@@ -1,0 +1,24 @@
+import unittest
+from graph import GraphCreater
+
+# tests the update_graph_connection function
+class test_update_graph_connection(unittest.TestCase):
+
+    def test_connected_graph(self):
+        graph_creator = GraphCreater(edges=[(1, 2), (2, 3), (3, 1)], color_pattern=0)
+        result = graph_creator.update_graph_connection()
+        self.assertTrue(result, "Fail: is not True")
+
+    def test_disconnected_graph(self):
+        graph_creator = GraphCreater(edges=[(1, 2), (3, 4)], color_pattern=0)
+        result = graph_creator.update_graph_connection()
+        self.assertFalse(result, "Fail: is not False")
+
+
+    def test_empty_graph(self):
+        graph_creator = GraphCreater(edges=[], color_pattern=0)
+        result = graph_creator.update_graph_connection()
+        self.assertIsNone(result, "Fail: is not None")
+
+if __name__ == '__main__':
+    unittest.main()
