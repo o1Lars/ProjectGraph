@@ -1,5 +1,5 @@
 """
-This program finds a colouring pattern that minimizes the “frustration” of the graph which is either provided by the,
+This program finds a colouring pattern that minimizes the “frustration” of the graph which is either provided by the user,
 or randomly generated
 
 Requirements
@@ -7,6 +7,7 @@ Requirements
 Package matplotlib https://matplotlib.org/ which can be installed via PIP.
 Package networkx https://networkx.org/ which can be installed via PIP.
 Package random
+package tkinter
 Module visualiser_rndgraph.py   ### add file path
 Module graph.py from            ### add file path
 Python 3.7 or higher.
@@ -16,19 +17,11 @@ Notes
 -----
 This program is devoped as a group project as part of the exam DS830 Introduction to Programming fall 2023.
 """
+# Import dependencies
 import os
 import sys
-
-# Get the directory of the current script
-script_path = sys.argv[0] if hasattr(sys, 'frozen') else __file__
-current_dir = os.path.dirname(os.path.abspath(script_path))
-
-# Append the parent directory to sys.path to enable relative imports
-sys.path.append(os.path.dirname(current_dir))
-
-# Import dependencies
-from minimal_frustration_graph import visualiser_rndgraph as vrg
-from minimal_frustration_graph import graph as g
+import visualiser_rndgraph as vrg
+import graph as g
 import random as random
 import tkinter as tk
 import tkinter.ttk as ttk
