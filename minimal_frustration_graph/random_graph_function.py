@@ -30,8 +30,8 @@ connections = []
 for i in range(len(random_graph)):
     for j in range(i + 1, len(random_graph[i])):
         if random_graph[i][j] == 1:
-            connections.append([i, j])
+            connections.append((i, j))
 
-edges_random_graph = tuple(connections)
+edges_random_graph = connections
 
 print(edges_random_graph)
