@@ -4,9 +4,8 @@ This module provides Graph, a class for creating a graph of edges and sites form
 Requirements
 ------------
 Package matplotlib https://matplotlib.org/ which can be installed via PIP.
-Package networkx https://networkx.org/ which can be installed via PIP.
 Python 3.7 or higher.
-s¤
+
 Notes
 -----
 Module is created as part of the group project for the final exam of DS830 Introduction to programming.
@@ -329,15 +328,6 @@ class GraphCreater(GraphSimulator):
     def __repr__(self):
         """Return a Python-like representation of this this instance"""
         return f"GraphCreater({self.edges}, {self.color_pattern})"
-
-test_graph = GraphCreater([(1, 2),(1, 2),(1, 2)], 1)
-test_graph2 = GraphCreater([(1, 2),(1, 2),(1, 2)], 1)
-test_graph3 = GraphCreater([(0, 2),(1, 2),(1, 2)], 1)
-
-print(str(test_graph))
-print(test_graph == test_graph2)
-print(test_graph == test_graph3)
-print(repr(test_graph))
 
 # Import doctest module
 if __name__ == "__main__":
