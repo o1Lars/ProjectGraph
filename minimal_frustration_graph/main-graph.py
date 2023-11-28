@@ -21,6 +21,7 @@ This program is devoped as a group project as part of the exam DS830 Introductio
 import os
 import sys
 import visualiser_rndgraph as vrg
+from random_graph import generate_random_graph
 import graph as g
 import random as random
 import tkinter as tk
@@ -141,12 +142,11 @@ class Toplevel1:
             return
 
         # Run simulation
-        sim_graph.run_simulation(update_procedure, number_of_iterations)    # TODO: add sim_graph to class
+        sim_graph.run_simulation(update_procedure, number_of_iterations)
 
         # display report of frustration
-        sim_graph.report_frustration_history(abs(number_of_iterations))     # TODO: add sim_graph to class
+        sim_graph.report_frustration_history(abs(number_of_iterations))
 
-            # Run new graph or quit
 
     def display_error_message(self, message):
         error_popup = tk.Toplevel(self.top)
