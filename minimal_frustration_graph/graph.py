@@ -11,18 +11,9 @@ Notes
 -----
 Module is created as part of the group project for the final exam of DS830 Introduction to programming.
 """
-import os
-import sys
-
-# Get the directory of the current script
-script_path = sys.argv[0] if hasattr(sys, 'frozen') else __file__
-current_dir = os.path.dirname(os.path.abspath(script_path))
-
-# Append the parent directory to sys.path to enable relative imports
-sys.path.append(os.path.dirname(current_dir))
 
 # Import dependencies
-from minimal_frustration_graph import visualiser_rndgraph as vrg
+import visualiser_rndgraph as vrg
 import matplotlib.pyplot as plt
 from typing import List, Optional, Dict
 import random as random
@@ -47,19 +38,9 @@ class GraphSimulator:
                 new_color = 1.0 if current_color != 1.0 else 0.0    # swap current color
                 val_map[vertex] = new_color
                 self.update_vertex_frustration()                    # update vertices frustration
-            print("the colors of the sites have been swapped")
 
     def update_max_violation(self) -> None:
-        """
-        Identify the site with the largest value of local action and swap its colour.
-
-        Parameters
-        ----------
-        graph : list
-            DESCRIPTION. # TODO
-
-        # add tests
-        """
+        """Identify the site with the largest value of local action and swap its colour."""
 
         vertices_list = self.vertices_list
         vertices_frustration = self.vertices_frustration
@@ -87,17 +68,10 @@ class GraphSimulator:
 
         # calculate new frustration for each vertex
         self.update_vertex_frustration()
-        print("the site with the largest value of the local action has had its colours swapped")
 
     def update_monte_carlo(self) -> None:
-        """Visit each site of the graph and swap colour if the exponential of the local action > a random float between 0,1.
-        Parameters
-        ----------
-        graph : list
-            DESCRIPTION. # TODO
+        """Visit each site of the graph and swap colour if the exponential of the local action > a random float between 0,1."""
 
-        # add tests
-        """
         vertices_list = self.vertices_list
         vertices_frustration = self.vertices_frustration
         val_map = self.val_map
@@ -115,7 +89,7 @@ class GraphSimulator:
                     new_color = 1.0 if current_color != 1.0 else 0.0 # swap current colour
                     val_map[vertex] = new_color
                     self.update_vertex_frustration()  # update vertices frustration
-                    print("The colours of the sites have been swapped.")
+
 
     def run_simulation(self, update_procedure, iterations):
         """Simulate update of graph accourding to update_procedure for number of iterations"""
@@ -133,21 +107,9 @@ class GraphSimulator:
             # compute new global metric and add to total_frustration
             self.total_frustration.append(self.global_metric())
 
-        print(self.total_frustration)
-
-        print(f"Graph simulated the {update_procedure} for {iterations} number of iterations")
-
-
     def report_frustration_history(self, steps: int) -> None:
-        """ Display plot of the evolution of total frustration over a specified number of steps
+        """ Display plot of the evolution of total frustration over a specified number of steps"""
 
-        Parameters
-        ----------
-        frustration : int
-            DESCRIPTION.
-        steps : int
-            DESCRIPTION.
-        """
         step_list = list(range(0, steps + 1))
         frustration = self.total_frustration
 
@@ -275,15 +237,7 @@ class GraphCreater(GraphSimulator):
         return vertices_neighbours
 
     def local_metric(self, c_i: int, n_j: int) -> float:
-        """
-        Return  the frustration of a site
-
-        TODO:   add tests
-                add assumptions
-
-        Parameters
-        ----------
-        """
+        """Return  the frustration of a site"""
 
         # Store local metric total
         total_frustration = 0.0
@@ -293,15 +247,8 @@ class GraphCreater(GraphSimulator):
         return total_frustration
 
     def global_metric(self) -> float:
-        """
-        Return the sum of the local_metric over every single vertex of the graph.
+        """Return the sum of the local_metric over every single vertex of the graph.
         The global metric is the measure of the frustration of the graph simulated by the program.
-
-        TODO:   add tests
-                add assumptions
-
-        Parameters
-        ----------
         """
         vertices_frustration = self.vertices_frustration
 
@@ -319,8 +266,7 @@ class GraphCreater(GraphSimulator):
         return total_frustration
 
     def update_vertex_frustration(self):
-        """Updates frustration for each vertex
-        """
+        """Updates frustration for each vertex"""
 
         vertices_list = self.vertices_list
         vertices_neighbours = self.vertices_neighbours
@@ -331,7 +277,6 @@ class GraphCreater(GraphSimulator):
             n_J = [vertices_color[neighbour] for neighbour in vertices_neighbours[vertex]]
             frustration = self.local_metric(c_i, n_J)
             self.vertices_frustration[vertex] = frustration
-            print(f"Frustration for vertex {vertex}: {frustration}")
 
     def update_graph_connection(self):
         # Return True if graph is connected, otherwise return False
@@ -366,7 +311,33 @@ class GraphCreater(GraphSimulator):
         print("vertex frustration: ", self.vertices_frustration)
         print("total graph frustration: ", self.total_frustration)
 
+    def __eq__(self, other):
+        """Return true if edges of this instance is equal to edges of other instance of same class"""
+ 
+        if (self.edges == other.edges):
+            return True
+        else:
+            return False
 
+
+    def __str__(self):
+        """Return a textual representation of the attributes of the graph"""
+
+        return f"vertices: {self.vertices_list}. Vertex colors: {self.val_map}. Vertex neighbours: {self.vertices_neighbours}.\
+            vertex frustration: {self.vertices_frustration}. Total graph frustration: {self.total_frustration}"
+    
+    def __repr__(self):
+        """Return a Python-like representation of this this instance"""
+        return f"GraphCreater({self.edges}, {self.color_pattern})"
+
+test_graph = GraphCreater([(1, 2),(1, 2),(1, 2)], 1)
+test_graph2 = GraphCreater([(1, 2),(1, 2),(1, 2)], 1)
+test_graph3 = GraphCreater([(0, 2),(1, 2),(1, 2)], 1)
+
+print(str(test_graph))
+print(test_graph == test_graph2)
+print(test_graph == test_graph3)
+print(repr(test_graph))
 
 # Import doctest module
 if __name__ == "__main__":
