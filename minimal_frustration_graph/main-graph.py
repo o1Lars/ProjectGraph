@@ -408,11 +408,7 @@ class Toplevel1:
 
 
 def add_edges_from_lines(lines: str) -> list[tuple]:
-    """Read lines, check if line represent an edge of a graph.
-    Return list of edges
-
-    ## implement tests
-    """
+    """Read lines, check if line represent an edge of a graph. Return list of edges"""
     # Store edges in a list
     edges_list = []
 
@@ -443,10 +439,7 @@ def add_edges_from_lines(lines: str) -> list[tuple]:
 
 
 def create_graph_from_file(file_path: str) -> list[tuple]:
-    """Read a file, checks if its valid and return a list of edges for a graph
-
-    ## implement tests
-    """
+    """Read a file, checks if its valid and return a list of edges for a graph"""
     # Open the text file in read mode
     try:
         with open(file_path, 'r') as file:
