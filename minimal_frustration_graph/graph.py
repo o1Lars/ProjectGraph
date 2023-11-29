@@ -17,6 +17,7 @@ import matplotlib.pyplot as plt
 from typing import List, Optional, Dict
 import random as random
 import math as math
+from time import sleep
 
 
 class GraphSimulator:
@@ -89,7 +90,6 @@ class GraphSimulator:
                     val_map[vertex] = new_color
                     self.update_vertex_frustration()  # update vertices frustration
 
-
     def run_simulation(self, update_procedure, iterations):
         """Simulate update of graph accourding to update_procedure for number of iterations"""
 
@@ -101,8 +101,8 @@ class GraphSimulator:
             else:
                 self.update_monte_carlo()
             # update coloring in visual representation of the graph instance
+            sleep(0.6)
             self.vis_graph.update(val_map=self.val_map)
-
 
             # compute new global metric and add to total_frustration
             self.total_frustration.append(self.global_metric())
@@ -116,12 +116,16 @@ class GraphSimulator:
         fig, ax = plt.subplots()  # Create a figure containing a single axes.
         ax.plot(step_list, frustration)  # Plot some data on the axes
 
-        # set labels
+        # Set labels
         ax.set_ylabel("Frustration of the graph")
         ax.set_xlabel("Number of update steps")
 
+        # Set the title directly on the axes
+        ax.set_title("Evolution of Total Frustration")
+
         # Display
         plt.show()
+
 
 
 class GraphCreater(GraphSimulator):
@@ -156,7 +160,7 @@ class GraphCreater(GraphSimulator):
         self.vertices_frustration = {}
         self.total_frustration = []
         self.is_connected = False
-        self.vis_graph = vrg.Visualiser(self.edges, val_map=self.val_map)
+        self.vis_graph = vrg.Visualiser(self.edges, val_map=self.val_map, vis_labels=True)
 
         # calculate initial vertex frustration / local metric
         self.update_vertex_frustration()
