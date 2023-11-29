@@ -160,7 +160,7 @@ class GraphCreater(GraphSimulator):
         self.vertices_frustration = {}
         self.total_frustration = []
         self.is_connected = False
-        self.vis_graph = vrg.Visualiser(self.edges, val_map=self.val_map, vis_labels=True)
+        self.vis_graph = vrg.Visualiser(self.edges, val_map=self.val_map, vis_labels=True, node_size=200)
 
         # calculate initial vertex frustration / local metric
         self.update_vertex_frustration()

@@ -93,8 +93,8 @@ class Toplevel1:
         #Try except clause below for number of sites
         try:
             num_of_sites = int(num_of_sites)
-            if num_of_sites > 50 or num_of_sites < 0:
-                raise ValueError("Number of sites cannot be negative or exceed 50.")
+            if num_of_sites > 75 or num_of_sites < 0:
+                raise ValueError("Number of sites cannot be negative or exceed 75.")
         except ValueError as e:
             # Display error message
             error_message = f"Error: {e}"
