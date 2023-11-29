@@ -20,3 +20,5 @@ def generate_random_graph(n, p=0.6):
                 edges.append((i, j))
 
     return edges
+
+print(generate_random_graph(6))

@@ -54,27 +54,101 @@ class TestGraphSimulator(unittest.TestCase):
 
     def setUp_test_graph(self):
         # Create an instance of the GraphSimulator for testing
-        # Initialize with required data or mocks if necessary
-        pass
+        test_graph = GraphCreater([(0, 1), (0, 3), (0, 4), (0, 5), (1, 2), (1, 4), (1, 5), (2, 4), (2, 5), (3, 4), (3, 5), (4, 5)], 0)
+
+        return test_graph
 
     def test_update_ordered(self):
-        # Test the update_ordered method
-        pass
+        test = self.setUp_test_graph()
+        test.update_ordered()
 
+        # Check specific vertices' colors or frustrations
+        self.assertEqual(test.val_map[1], 1.0, "Vertex 1 color is incorrect after update_ordered")
+        self.assertEqual(test.val_map[2], 1.0, "Vertex 2 color is incorrect after update_ordered")
+        self.assertEqual(test.vertices_frustration[1], 0.0, "Vertex 1 frustration is incorrect after update_ordered")
+
+        # check list of all vertex colors
+        expected_valmap = {0: 1.0, 1: 1.0, 3: 1.0, 4: 0, 5: 0, 2: 1.0}
+        self.assertEqual(test.val_map, expected_valmap, ' Not equal')
+
+        # check list of all frustrations
+        expected_frustration = {0: 0.0, 1: 0.0, 3: -1.0, 4: -3.0, 5: -3.0, 2: -1.0}
+        self.assertEqual(test.vertices_frustration, expected_frustration, ' Not equal')
+        
     def test_update_max_violation(self):
-        # Test the update_max_violation method
-        pass
+        test = self.setUp_test_graph()
+        test.update_max_violation()
+
+        # Check specific vertices' colors or frustrations
+        self.assertEqual(test.val_map[1], 0, "Vertex 1 color is incorrect after update_max_violation")
+        self.assertEqual(test.val_map[2], 0, "Vertex 2 color is incorrect after update_max_violation")
+        self.assertEqual(test.vertices_frustration[1], 2.0, "Vertex 1 frustration is incorrect after update_max_violation")
+
+        # check list of all vertex colors
+        expected_valmap = {0: 0, 1: 0, 3: 0, 4: 1.0, 5: 0, 2: 0}
+        self.assertEqual(test.val_map, expected_valmap, ' Not equal')
+
+        # check list of all frustrations
+        expected_frustration = {0: 2.0, 1: 2.0, 3: 1.0, 4: -5.0, 5: 3.0, 2: 1.0}
+        self.assertEqual(test.vertices_frustration, expected_frustration, ' Not equal')
 
     def test_update_monte_carlo(self):
-        # Test the update_monte_carlo method
-        pass
+        test = self.setUp_test_graph()
+        test.update_monte_carlo()
+
+        # Check specific vertices' colors or frustrations
+        self.assertEqual(test.val_map[1], 1.0, "Vertex 1 color is incorrect after update_monte_carlo")
+        self.assertEqual(test.val_map[2], 1.0, "Vertex 2 color is incorrect after update_monte_carlo")
+        self.assertEqual(test.vertices_frustration[1], 0.0, "Vertex 1 frustration is incorrect after update_monte_carlo")
+
+        # check list of all vertex colors
+        expected_valmap = {0: 1.0, 1: 1.0, 3: 1.0, 4: 0, 5: 0, 2: 1.0}
+        self.assertEqual(test.val_map, expected_valmap, ' Not equal')
+
+        # check list of all frustrations
+        expected_frustration = {0: 0.0, 1: 0.0, 3: -1.0, 4: -3.0, 5: -3.0, 2: -1.0}
+        self.assertEqual(test.vertices_frustration, expected_frustration, ' Not equal')
 
     def test_run_simulation(self):
-        # Test the run_simulation method
-        pass
+        # test graphs
+        test_ordered = self.setUp_test_graph()
+        test_max_violation = self.setUp_test_graph()
+        test_monte_carlo = self.setUp_test_graph()
 
-    def test_report_frustration_history(self):
-        # Test the report_frustration_history method
-        pass
+        # update Orderred
+        test_ordered.run_simulation('ordered', 1)
+
+        # store expected results
+        expected_valmap = {0: 1.0, 1: 1.0, 3: 1.0, 4: 0, 5: 0, 2: 1.0}
+        expected_total_frustration = [12.0, -4.0]
+
+        # compare
+        self.assertEqual(test_ordered.val_map, expected_valmap, 'Not equal')
+        self.assertEqual(test_ordered.total_frustration, expected_total_frustration, 'Not equal')
+
+        # update MaxViolation
+        test_max_violation.run_simulation('maxviolation', 1)
+
+        # store expected results
+        expected_valmap = {0: 0, 1: 0, 3: 0, 4: 1.0, 5: 0, 2: 0}
+        expected_total_frustration = [12.0, 2.0]
+
+        # compare
+        self.assertEqual(test_max_violation.val_map, expected_valmap, 'Not equal')
+        self.assertEqual(test_max_violation.total_frustration, expected_total_frustration, 'Not equal')
+
+        # update MonteCarlo
+        test_monte_carlo.run_simulation('montecarlo', 1)
+
+        # store expected results
+        expected_valmap = {0: 1.0, 1: 1.0, 3: 1.0, 4: 0, 5: 0, 2: 1.0}
+        expected_total_frustration = [12.0, -4.0]
+
+        # compare
+        self.assertEqual(test_monte_carlo.val_map, expected_valmap, 'Not equal')
+        self.assertEqual(test_monte_carlo.total_frustration, expected_total_frustration, 'Not equal')
+
+
+
 if __name__ == '__main__':
     unittest.main()
