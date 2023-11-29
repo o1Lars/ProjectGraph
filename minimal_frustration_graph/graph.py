@@ -100,6 +100,7 @@ class GraphSimulator:
                 self.update_max_violation()
             else:
                 self.update_monte_carlo()
+            # update coloring in visual representation of the graph instance
             self.vis_graph.update(val_map=self.val_map)
 
 
@@ -124,10 +125,7 @@ class GraphSimulator:
 
 
 class GraphCreater(GraphSimulator):
-    """Each instance of this class creates a Graph with edges, vertices and a coloring pattern. Furthermore,
-    each instance has methods for calculating local site frustration, global frustration and updating color patterns
-    according to three different update methods: Ordered, MaxViolation and MonteCarlo
-    """
+    """Each instance of this class creates a Graph with edges, vertices and a coloring pattern. """
 
     def __init__(
         self,
@@ -297,15 +295,6 @@ class GraphCreater(GraphSimulator):
                 else:
                     return False
                     break # Finish the loop if an unconnected section has been found
-
-    def info(self):
-        """Display relevant graph info"""
-
-        print("vertices: ", self.vertices_list)
-        print("vertex colors: ", self.val_map)
-        print("vertex neighbours: ", self.vertices_neighbours)
-        print("vertex frustration: ", self.vertices_frustration)
-        print("total graph frustration: ", self.total_frustration)
 
     def __eq__(self, other):
         """Return true if edges of this instance is equal to edges of other instance of same class"""

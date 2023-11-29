@@ -1,8 +1,8 @@
 import unittest
-from graph import GraphCreater
+from graph import GraphCreater, GraphSimulator
 
 # tests the update_graph_connection function
-class test_update_graph_connection(unittest.TestCase):
+class TestUpdateGraphConnection(unittest.TestCase):
 
     def test_connected_graph(self):
         graph_creator = GraphCreater(edges=[(1, 2), (2, 3), (3, 1)], color_pattern=0)
@@ -20,7 +20,8 @@ class test_update_graph_connection(unittest.TestCase):
         result = graph_creator.update_graph_connection()
         self.assertIsNone(result, "Fail: is not None")
 
-class test_update_vertex_frustration(unittest.TestCase):
+# tests the update frustration of graph method from class GraphSimulator
+class TestUpdateVertexFrustration(unittest.TestCase):
 
     def mock_local_metric_input(self, c_i, n_j):
         # mock of total local_metric method for testing
@@ -47,5 +48,33 @@ class test_update_vertex_frustration(unittest.TestCase):
             self.assertEqual(result, expected_result, "Mock and actual local_metric results differ")
 
         test_local_metric()
+
+# test class GraphSimulator and methods
+class TestGraphSimulator(unittest.TestCase):
+
+    def setUp_test_graph(self):
+        # Create an instance of the GraphSimulator for testing
+        # Initialize with required data or mocks if necessary
+        pass
+
+    def test_update_ordered(self):
+        # Test the update_ordered method
+        pass
+
+    def test_update_max_violation(self):
+        # Test the update_max_violation method
+        pass
+
+    def test_update_monte_carlo(self):
+        # Test the update_monte_carlo method
+        pass
+
+    def test_run_simulation(self):
+        # Test the run_simulation method
+        pass
+
+    def test_report_frustration_history(self):
+        # Test the report_frustration_history method
+        pass
 if __name__ == '__main__':
     unittest.main()
