@@ -132,9 +132,7 @@ class GraphCreater(GraphSimulator):
     def __init__(
         self,
         edges: list,
-        color_pattern: int,
-        vertices_dict: Optional[Dict] = {},
-        total_frustration: Optional[List] = []) -> None:
+        color_pattern: int) -> None:
         super().__init__
 
         """
@@ -201,7 +199,6 @@ class GraphCreater(GraphSimulator):
             if color_pattern == 0 or color_pattern == 1:
                 color_dict[vertex] = color_pattern
             else:  # if color pattern not 0 or 1, randomly assign color value
-                random.seed(10)
                 color = random.randint(0, 1)
                 color_dict[vertex] = color
 

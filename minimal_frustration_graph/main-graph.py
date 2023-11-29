@@ -20,7 +20,6 @@ This program is devoped as a group project as part of the exam DS830 Introductio
 # Import dependencies
 import os
 import sys
-import visualiser_rndgraph as vrg
 from random_graph import generate_random_graph
 import graph as g
 import random as random
