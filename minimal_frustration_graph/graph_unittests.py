@@ -54,18 +54,13 @@ class TestGraphSimulator(unittest.TestCase):
 
     def setUp_test_graph(self):
         # Create an instance of the GraphSimulator for testing
-        test_graph = GraphCreater([(0, 1), (0, 3), (0, 4), (0, 5), (1, 2), (1, 4), (1, 5), (2, 4), (2, 5), (3, 4), (3, 5), (4, 5)], 0)
+        test_graph = GraphCreater([(0, 1), (0, 3), (0, 4), (0, 5), (1, 2), (1, 4), (1, 5), (2, 4), (2, 5), (3, 4), (3, 5), (4, 5)], 'All 0')
 
         return test_graph
 
     def test_update_ordered(self):
         test = self.setUp_test_graph()
         test.update_ordered()
-
-        # Check specific vertices' colors or frustrations
-        self.assertEqual(test.val_map[1], 1.0, "Vertex 1 color is incorrect after update_ordered")
-        self.assertEqual(test.val_map[2], 1.0, "Vertex 2 color is incorrect after update_ordered")
-        self.assertEqual(test.vertices_frustration[1], 0.0, "Vertex 1 frustration is incorrect after update_ordered")
 
         # check list of all vertex colors
         expected_valmap = {0: 1.0, 1: 1.0, 3: 1.0, 4: 0, 5: 0, 2: 1.0}
@@ -79,10 +74,6 @@ class TestGraphSimulator(unittest.TestCase):
         test = self.setUp_test_graph()
         test.update_max_violation()
 
-        # Check specific vertices' colors or frustrations
-        self.assertEqual(test.val_map[1], 0, "Vertex 1 color is incorrect after update_max_violation")
-        self.assertEqual(test.val_map[2], 0, "Vertex 2 color is incorrect after update_max_violation")
-        self.assertEqual(test.vertices_frustration[1], 2.0, "Vertex 1 frustration is incorrect after update_max_violation")
 
         # check list of all vertex colors
         expected_valmap = {0: 0, 1: 0, 3: 0, 4: 1.0, 5: 0, 2: 0}
@@ -96,10 +87,6 @@ class TestGraphSimulator(unittest.TestCase):
         test = self.setUp_test_graph()
         test.update_monte_carlo()
 
-        # Check specific vertices' colors or frustrations
-        self.assertEqual(test.val_map[1], 1.0, "Vertex 1 color is incorrect after update_monte_carlo")
-        self.assertEqual(test.val_map[2], 1.0, "Vertex 2 color is incorrect after update_monte_carlo")
-        self.assertEqual(test.vertices_frustration[1], 0.0, "Vertex 1 frustration is incorrect after update_monte_carlo")
 
         # check list of all vertex colors
         expected_valmap = {0: 1.0, 1: 1.0, 3: 1.0, 4: 0, 5: 0, 2: 1.0}

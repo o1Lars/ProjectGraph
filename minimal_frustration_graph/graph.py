@@ -165,7 +165,7 @@ class GraphCreater(GraphSimulator):
 
         # add delay to shoq initial graph
         sleep(0.6)
-        
+
         # calculate initial vertex frustration / local metric
         self.update_vertex_frustration()
         # calculate initial total frustration at instance construction
@@ -197,9 +197,9 @@ class GraphCreater(GraphSimulator):
 
         color_pattern = 0
         # set color pattern
-        if self.color_pattern.lower() == 'all 0':
+        if self.color_pattern == 'All 0':
             color_pattern = 0
-        elif self.color_pattern.lower() == 'all 1':
+        elif self.color_pattern == 'All 1':
             color_pattern = 1
         else:
             color_pattern = 2
