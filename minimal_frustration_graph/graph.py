@@ -163,6 +163,9 @@ class GraphCreater(GraphSimulator):
         self.is_connected = False
         self.vis_graph = vrg.Visualiser(self.edges, val_map=self.val_map, vis_labels=True, node_size=200)
 
+        # add delay to shoq initial graph
+        sleep(0.6)
+        
         # calculate initial vertex frustration / local metric
         self.update_vertex_frustration()
         # calculate initial total frustration at instance construction
@@ -192,7 +195,15 @@ class GraphCreater(GraphSimulator):
     def create_val_map(self) -> dict:
         """Return dictionary with color mapped to vertex"""
 
-        color_pattern = self.color_pattern
+        color_pattern = 0
+        # set color pattern
+        if self.color_pattern.lower() == 'all 0':
+            color_pattern = 0
+        elif self.color_pattern.lower() == 'all 1':
+            color_pattern = 1
+        else:
+            color_pattern = 2
+        
         color_dict = {}
         vertices_list = self.vertices_list
 
@@ -391,6 +402,11 @@ def create_graph_from_file(file_path: str) -> list[tuple]:
     graph_edges = add_edges_from_lines(lines)
 
     return graph_edges
+
+""" graph_color_test1 = GraphCreater([(1,2), (1, 3), (2, 3)], 0)
+graph_color_test2 = GraphCreater([(1,2), (1, 3), (2, 3)], 0)
+print(graph_color_test1.val_map)
+print(graph_color_test2.val_map) """
 
 # Import doctest module
 if __name__ == "__main__":
