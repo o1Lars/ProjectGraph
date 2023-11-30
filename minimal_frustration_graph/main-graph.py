@@ -20,7 +20,6 @@ This program is devoped as a group project as part of the exam DS830 Introductio
 # Import dependencies
 import os
 import sys
-from random_graph import generate_random_graph
 import graph as g
 import random as random
 import tkinter as tk
@@ -125,10 +124,10 @@ class Toplevel1:
 
         # if random is checked, generate random graph edge list
         if random_is_checked == 1:
-            graph_edges_list = generate_random_graph(num_of_sites)
+            graph_edges_list = g.generate_random_graph(num_of_sites)
         else:  # get file from program
             file_from_path = self.Entry1.get()
-            graph_edges_list = create_graph_from_file(r"" + file_from_path)
+            graph_edges_list = g.create_graph_from_file(r"" + file_from_path)
 
         # Create graph
         sim_graph = g.GraphCreater(graph_edges_list, color_pattern)
@@ -405,58 +404,6 @@ class Toplevel1:
         self.Popupmenu2.configure(activeforeground='black')
         self.Popupmenu2.configure(font="TkMenuFont")
         self.Popupmenu2.post(event.x_root, event.y_root)
-
-
-def add_edges_from_lines(lines: str) -> list[tuple]:
-    """Read lines, check if line represent an edge of a graph. Return list of edges"""
-    # Store edges in a list
-    edges_list = []
-
-    # Iterate through the lines and add edges to the graph
-    for line in lines:
-        # Ignore lines starting with #
-        if line.startswith('#'):
-            continue
-
-        # Split the line by comma
-        nodes = line.split(',')
-
-        # Remove '()' from nodes
-        for i in range(len(nodes)):
-            nodes[i] = nodes[i].replace('(', '')
-            nodes[i] = nodes[i].replace(')', '')
-
-        # Check if both values are valid integers
-        if len(nodes) == 2 and nodes[0].strip().isdigit() and nodes[1].strip().isdigit():
-            # Convert nodes to integers and add the edge to the graph
-            u, v = map(int, nodes)
-            # Add the edge as a tuple to the edges_list
-            edges_list.append((u, v))
-        else:
-            print("Invalid input.")
-
-    return edges_list
-
-
-def create_graph_from_file(file_path: str) -> list[tuple]:
-    """Read a file, checks if its valid and return a list of edges for a graph"""
-    # Open the text file in read mode
-    try:
-        with open(file_path, 'r') as file:
-            # Read lines from the file and remove whitespaces
-            lines = [line.strip() for line in file.readlines() if line.strip()]
-    # Handle errors
-    except FileNotFoundError:
-        print("Error: The file could not be found.")
-    except IOError:
-        print("There was an error reading from the file.")
-
-    # add edges from file to edges_list
-    graph_edges = add_edges_from_lines(lines)
-
-    return graph_edges
-
-
 
 def start_up():
     main()
