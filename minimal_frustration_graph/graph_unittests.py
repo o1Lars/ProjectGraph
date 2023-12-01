@@ -1,6 +1,36 @@
 import unittest
 from graph import GraphCreater, GraphSimulator
 
+# tests the function that creates graph from an external file
+class TestCreateGraphFromFile(unittest.TestCase):
+    # First test - valid test
+    def test_valid_file(self):
+        # Load a temporary file with mock data
+        mock_file_path = 'mock_file.txt'
+        mock_data = "1 2\n2 3\n3 1\n"
+        with open(mock_file_path, 'w') as file:
+            file.write(mock_data)
+
+        # Store result of the function
+        result = create_graph_from_file(mock_file_path)
+
+        # Determine result from loading mock data
+        expected_result = [(1, 2), (2, 3), (3, 1)]
+
+        # Confirm result = expected_result
+        self.assertEqual(result, expected_result, "Graph edges mismatch")
+
+    # Second test - invalid test
+    def test_invalid_file(self):
+        # Store result of the function for a non-existent file
+        result = create_graph_from_file('nonexistent_file.txt')
+
+        # Confirm the result is empty since file is invalid
+        self.assertEqual(result, [], "Invalid file should return an empty list")
+
+if __name__ == '__main__':
+    unittest.main()
+
 # tests the update_graph_connection function
 class TestUpdateGraphConnection(unittest.TestCase):
 
