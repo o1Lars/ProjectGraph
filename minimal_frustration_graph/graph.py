@@ -355,6 +355,7 @@ def generate_random_graph(n, p=0.6):
 
 def add_edges_from_lines(lines: str) -> list[tuple]:
     """Read lines, check if line represent an edge of a graph. Return list of edges"""
+
     # Store edges in a list
     edges_list = []
 
@@ -399,7 +400,11 @@ def create_graph_from_file(file_path: str) -> list[tuple]:
         print("There was an error reading from the file.")
 
     # add edges from file to edges_list
-    graph_edges = add_edges_from_lines(lines)
+    try:
+        graph_edges = add_edges_from_lines(lines)
+    except UnboundLocalError as e:
+        print(e)
+        return []
 
     return graph_edges
 

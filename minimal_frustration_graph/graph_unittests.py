@@ -1,5 +1,5 @@
 import unittest
-from graph import GraphCreater, GraphSimulator
+from graph import GraphCreater, GraphSimulator, create_graph_from_file
 
 # tests the function that creates graph from an external file
 class TestCreateGraphFromFile(unittest.TestCase):
@@ -7,7 +7,7 @@ class TestCreateGraphFromFile(unittest.TestCase):
     def test_valid_file(self):
         # Load a temporary file with mock data
         mock_file_path = 'mock_file.txt'
-        mock_data = "1 2\n2 3\n3 1\n"
+        mock_data = "1, 2\n2, 3\n3, 1\n"
         with open(mock_file_path, 'w') as file:
             file.write(mock_data)
 
