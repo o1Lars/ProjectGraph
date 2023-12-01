@@ -36,7 +36,7 @@ class TestUpdateVertexFrustration(unittest.TestCase):
         vertices_neighbours = {1: [2, 3], 2: [1, 3, 4], 3: [1, 2, 4], 4: [3, 2]}
         vertices_color = {1: 'red', 2: 'blue', 3: 'green'}
 
-# Tests the local metric from GraphCreater
+# Tests the local metric from GraphSimulator
 class TestLocalMetric(unittest.TestCase):
     def test_local_metric(self):
         # Setup for test
