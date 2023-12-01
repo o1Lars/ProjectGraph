@@ -36,18 +36,20 @@ class TestUpdateVertexFrustration(unittest.TestCase):
         vertices_neighbours = {1: [2, 3], 2: [1, 3, 4], 3: [1, 2, 4], 4: [3, 2]}
         vertices_color = {1: 'red', 2: 'blue', 3: 'green'}
 
-        # Mock the local_metric function for testing purposes
-        def test_local_metric():
-            graph_creator = GraphCreater(edges=[(1, 2), (2, 3), (3, 1)], color_pattern=0)
-            vertex_color = 1
-            neighbor_colors = [0, 1, 0]
+# Tests the local metric from GraphCreater
+class TestLocalMetric(unittest.TestCase):
+    def test_local_metric(self):
+        # Setup for test
+        graph_simulation = GraphCreater([(1, 2), (2, 3), (3, 1)], color_pattern=0)
+        c_i = 0
+        n_j = [0, 1, 0]
+        expected_result_frustration = 0.0
+        for c_j in n_j:
+            expected_result_frustration += (1 - 2 * c_i) * (1 - 2 * c_j)
 
-            #compares results to actual expected_results
-            result = self.mock_local_metric_input(vertex_color, neighbor_colors)
-            expected_result = graph_creator.local_metric(vertex_color, neighbor_colors)
-            self.assertEqual(result, expected_result, "Mock and actual local_metric results differ")
-
-        test_local_metric()
+        # Calling and comparing results with actual local_metric
+        result_test_frustration = graph_simulation.local_metric(c_i, n_j)
+        self.assertEqual(result_test_frustration, expected_result_frustration, "Local metric results differ")
 
 # test class GraphSimulator and methods
 class TestGraphSimulator(unittest.TestCase):
